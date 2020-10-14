@@ -40,11 +40,8 @@ public class ExerciseTracker {
 
     private void displayMenu() {
         System.out.println("\nSelect from:");
-        System.out.println("\te -> Record an exercise");
-        System.out.println("\tre -> Remove an exercise");
-        System.out.println("\tg -> Record a goal");
-        System.out.println("\trg -> Remove a goal");
-        System.out.println("\to -> View other information");
+        System.out.println("\te -> View Exercise Information");
+        System.out.println("\tg -> View Goals Information");
         System.out.println("\tq -> Quit");
     }
 
@@ -58,15 +55,91 @@ public class ExerciseTracker {
 
     private void processCommand(String command) {
         if (command.equals("e")) {
+            exerciseInfo();
+        } else if (command.equals("g")) {
+            goalInfo();
+        } else {
+            System.out.println("Selection not valid...");
+        }
+    }
+
+    private void exerciseInfo() {
+        boolean keepGoing = true;
+        String command = null;
+
+        while (keepGoing) {
+            displayExerciseInfo();
+            command = input.next();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processCommandExerciseInfo(command);
+            }
+        }
+        System.out.println("\nThank you!");
+    }
+
+    private void displayExerciseInfo() {
+        System.out.println("\nSelect from:");
+        System.out.println("\te -> Record an exercise");
+        System.out.println("\tre -> Remove an exercise");
+        System.out.println("\tpe -> View past exercise information");
+        System.out.println("\tq -> Quit");
+    }
+
+    private void processCommandExerciseInfo(String command) {
+        if (command.equals("e")) {
             recordExercise();
         } else if (command.equals("re")) {
             removeExercise();
-        } else if (command.equals("g")) {
+        } else if (command.equals("pe")) {
+            viewPastExercises();
+        } else {
+            System.out.println("Selection not valid...");
+        }
+    }
+
+    private void goalInfo() {
+        boolean keepGoing = true;
+        String command = null;
+
+        while (keepGoing) {
+            displayGoalInfo();
+            command = input.next();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processCommandGoalInfo(command);
+            }
+        }
+        System.out.println("\nThank you!");
+    }
+
+    private void displayGoalInfo() {
+        System.out.println("\nSelect from:");
+        System.out.println("\tg -> Record a goal");
+        System.out.println("\trg -> Remove a goal");
+        System.out.println("\tcg -> Record a completed goal");
+        System.out.println("\tvcg -> View completed goals");
+        System.out.println("\tvtg -> View goals todo");
+        System.out.println("\tq -> Quit");
+    }
+
+    private void processCommandGoalInfo(String command) {
+        if (command.equals("g")) {
             recordGoal();
         } else if (command.equals("rg")) {
             removeGoal();
-        } else if (command.equals("o")) {
-            viewOtherInfo();
+        } else if (command.equals("cg")) {
+            recordCompletedGoal();
+        } else if (command.equals("vcg")) {
+            viewCompletedGoals();
+        } else if (command.equals("vtg")) {
+            viewGoalsToDo();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -142,40 +215,52 @@ public class ExerciseTracker {
         System.out.println("You have removed this goal.");
     }
 
-    private void viewOtherInfo() {
-        boolean keepGoing = true;
-        String command = null;
-
-        while (keepGoing) {
-            viewOtherInfoDisplay();
-            command = input.next();
-            command = command.toLowerCase();
-
-            if (command.equals("q")) {
-                keepGoing = false;
-            } else {
-                processCommandOtherInfo(command);
-            }
-        }
-        System.out.println("\nThank you!");
+    private void recordCompletedGoal() {
+        //stub
     }
 
-    private void viewOtherInfoDisplay() {
-        System.out.println("\nSelect from:");
-        System.out.println("\te -> View past exercises");
-        System.out.println("\tg -> View goals");
-        System.out.println("\tq -> Quit");
+    private void viewCompletedGoals() {
+        //stub
     }
 
-    private void processCommandOtherInfo(String command) {
-        if (command.equals("e")) {
-            viewPastExercises();
-        } else if (command.equals("g")) {
-            viewGoals();
-        } else {
-            System.out.println("Selection not valid...");
-        }
+    private void viewGoalsToDo() {
+        //stub
     }
+
+//    private void viewOtherInfo() {
+//        boolean keepGoing = true;
+//        String command = null;
+//
+//        while (keepGoing) {
+//            viewOtherInfoDisplay();
+//            command = input.next();
+//            command = command.toLowerCase();
+//
+//            if (command.equals("q")) {
+//                keepGoing = false;
+//            } else {
+//                processCommandOtherInfo(command);
+//            }
+//        }
+//        System.out.println("\nThank you!");
+//    }
+//
+//    private void viewOtherInfoDisplay() {
+//        System.out.println("\nSelect from:");
+//        System.out.println("\te -> View past exercises");
+//        System.out.println("\tg -> View goals");
+//        System.out.println("\tq -> Quit");
+//    }
+//
+//    private void processCommandOtherInfo(String command) {
+//        if (command.equals("e")) {
+//            viewPastExercises();
+//        } else if (command.equals("g")) {
+//            viewGoals();
+//        } else {
+//            System.out.println("Selection not valid...");
+//        }
+//    }
 
     private void viewPastExercises() {
         boolean keepGoing = true;
@@ -204,7 +289,7 @@ public class ExerciseTracker {
     }
 
     private void processCommandPastExercises(String command) {
-        if (command.equals("e")) {
+        if (command.equals("d")) {
             viewExercisesByDate();
         } else if (command.equals("t")) {
             viewExercisesByType();

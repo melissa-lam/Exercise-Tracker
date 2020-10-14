@@ -7,11 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ExerciseTest {
     private Exercise testExercise;
+    private Exercise setExercise;
 
     @BeforeEach
     void runBefore() {
         testExercise = new Exercise("Cardio", "October 12", 1);
     }
+
 
     @Test
     public void testGetType() {

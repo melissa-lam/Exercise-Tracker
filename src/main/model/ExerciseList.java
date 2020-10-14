@@ -12,9 +12,9 @@ public class ExerciseList {
         this.exercises = new ArrayList<Exercise>();
     }
 
-    public List<Exercise> getExerciseList() {
-        return exercises;
-    }
+//    public List<Exercise> getExerciseList() {
+//        return exercises;
+//    }
 
     public int length() {
         return exercises.size();

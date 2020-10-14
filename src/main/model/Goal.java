@@ -11,11 +11,11 @@ public class Goal {
         this.date = date;
     }
 
-    public void setGoal() {
-        this.hours = 0;
-        this.type = "";
-        this.date = "";
-    }
+//    public void setGoal() {
+//        this.hours = 0;
+//        this.type = "";
+//        this.date = "";
+//    }
 
     public String getType() {
         return type;
@@ -27,6 +27,10 @@ public class Goal {
 
     public int getHours() {
         return hours;
+    }
+
+    public String getName() {
+        return (type + ": " + date + " for " + hours + " hours");
     }
 
 }

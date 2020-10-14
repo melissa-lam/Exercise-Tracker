@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,6 +14,7 @@ public class GoalsTest {
     private Goal goals1;
     private Goal goals2;
     private Goal goals3;
+    private List<String> names;
 
     @BeforeEach
     void runBefore() {
@@ -68,12 +71,20 @@ public class GoalsTest {
     }
 
     @Test
-    public void testNumCompletedGoals() {
-        testCompleted.addCompletedGoals(goals1);
-        testCompleted.addCompletedGoals(goals2);
-        testCompleted.addCompletedGoals(goals3);
-        assertEquals(3, testCompleted.numCompletedGoals());
+    public void testNumGoals() {
+        testCompleted.addGoals(goals1);
+        testCompleted.addGoals(goals2);
+        testCompleted.addGoals(goals3);
+        assertEquals(3, testCompleted.numGoals());
     }
+
+//    @Test
+//    public void testNumCompletedGoals() {
+//        testCompleted.addCompletedGoals(goals1);
+//        testCompleted.addCompletedGoals(goals2);
+//        testCompleted.addCompletedGoals(goals3);
+//        assertEquals(3, testCompleted.numCompletedGoals());
+//    }
 
     @Test
     public void testNumRemainingGoals() {
@@ -91,5 +102,13 @@ public class GoalsTest {
         assertEquals(3, testGoals.length());
     }
 
+    @Test
+    public void testGetNames() {
+        testGoals.addGoals(goals1);
+        testGoals.addGoals(goals2);
+        List<String> names = testGoals.getNames();
+        assertTrue(names.contains("Running: June 1 for 3 hours"));
+        assertTrue(names.contains("Cardio: June 1 for 2 hours"));
+    }
 
 }

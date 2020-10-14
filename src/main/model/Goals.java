@@ -6,10 +6,12 @@ import java.util.List;
 public class Goals {
     private List<Goal> goals;
     private List<Goal> completedGoals;
+    private List<String> names;
 
     public Goals() {
         this.goals = new ArrayList<Goal>();
         this.completedGoals = new ArrayList<Goal>();
+        this.names = new ArrayList<String>();
     }
 
     public int length() {
@@ -20,9 +22,9 @@ public class Goals {
         return goals.contains(g);
     }
 
-    public Goal getPosition(int pos) {
-        return goals.get(pos);
-    }
+//    public Goal getPosition(int pos) {
+//        return goals.get(pos);
+//    }
 
     // MODIFIES: this
     // EFFECTS: adds a goal to the current list of goals to do
@@ -30,11 +32,11 @@ public class Goals {
         goals.add(g);
     }
 
-    // MODIFIES: this
-    // EFFECTS: adds a goal to the current list of completed goals
-    public void addCompletedGoals(Goal g) {
-        completedGoals.add(g);
-    }
+//    // MODIFIES: this
+//    // EFFECTS: adds a goal to the current list of completed goals
+//    public void addCompletedGoals(Goal g) {
+//        completedGoals.add(g);
+//    }
 
     // REQUIRES: list not be empty
     // MODIFIES: this
@@ -66,24 +68,38 @@ public class Goals {
     }
 
     // EFFECTS: returns the number of completed goals
-    public int numCompletedGoals() {
-        return completedGoals.size();
+    public int numGoals() {
+        return goals.size();
     }
 
-    // EFFECTS: returns the list of completed goals
-    public List<Goal> completedGoals() {
-        return completedGoals;
-    }
+//    // EFFECTS: returns the number of completed goals
+//    public int numCompletedGoals() {
+//        return completedGoals.size();
+//    }
+
+//    // EFFECTS: returns the list of completed goals
+//    public List<Goal> completedGoals() {
+//        return completedGoals;
+//    }
 
     // EFFECTS: returns the number of remaining goals left to do
     public int numRemainingGoals() {
         return goals.size();
     }
 
-    // EFFECTS: returns the list of remaining goals
-    public List<Goal> remainingGoals() {
-        return goals;
+//    // EFFECTS: returns the list of remaining goals
+//    public List<Goal> remainingGoals() {
+//        return goals;
+//    }
+
+    public List<String> getNames() {
+        for (Goal g: goals) {
+            names.add(g.getName());
+        }
+        return names;
     }
 
-
+//    public boolean containsName(String s) {
+//        return names.contains(s);
+//    }
 }
