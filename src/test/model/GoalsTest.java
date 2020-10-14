@@ -19,7 +19,6 @@ public class GoalsTest {
     @BeforeEach
     void runBefore() {
         testGoals = new Goals();
-        testCompleted = new Goals();
         goals1 = new Goal("Running", "June 1", 3);
         goals2 = new Goal("Cardio", "June 1", 2);
         goals3 = new Goal("Cardio", "July 22", 1);
@@ -42,6 +41,7 @@ public class GoalsTest {
         testGoals.addGoals(goals1);
         testGoals.addGoals(goals2);
         testGoals.addGoals(goals3);
+        assertEquals(3,testGoals.length());
         testGoals.removeGoals(goals1);
         assertEquals(2,testGoals.length());
         assertTrue(testGoals.contains(goals2));
@@ -57,6 +57,8 @@ public class GoalsTest {
         assertEquals(2, goalsByDate.length());
         assertTrue(testGoals.contains(goals1));
         assertTrue(testGoals.contains(goals2));
+        Goals noGoalsByDate = testGoals.goalsByDate("Jan 1");
+        assertEquals(0, noGoalsByDate.length());
     }
 
     @Test
@@ -68,38 +70,17 @@ public class GoalsTest {
         assertEquals(2, goalsByType.length());
         assertTrue(testGoals.contains(goals2));
         assertTrue(testGoals.contains(goals3));
+        Goals noGoalsByType = testGoals.goalsByType("Abs");
+        assertEquals(0, noGoalsByType.length());
     }
 
     @Test
     public void testNumGoals() {
-        testCompleted.addGoals(goals1);
-        testCompleted.addGoals(goals2);
-        testCompleted.addGoals(goals3);
-        assertEquals(3, testCompleted.numGoals());
-    }
-
-//    @Test
-//    public void testNumCompletedGoals() {
-//        testCompleted.addCompletedGoals(goals1);
-//        testCompleted.addCompletedGoals(goals2);
-//        testCompleted.addCompletedGoals(goals3);
-//        assertEquals(3, testCompleted.numCompletedGoals());
-//    }
-
-    @Test
-    public void testNumRemainingGoals() {
         testGoals.addGoals(goals1);
         testGoals.addGoals(goals2);
+        assertEquals(2, testGoals.numGoals());
         testGoals.addGoals(goals3);
-        assertEquals(3, testGoals.numRemainingGoals());
-    }
-
-    @Test
-    public void testRemainingGoals() {
-        testGoals.addGoals(goals1);
-        testGoals.addGoals(goals2);
-        testGoals.addGoals(goals3);
-        assertEquals(3, testGoals.length());
+        assertEquals(3, testGoals.numGoals());
     }
 
     @Test

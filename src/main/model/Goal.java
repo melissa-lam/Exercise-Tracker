@@ -11,24 +11,22 @@ public class Goal {
         this.date = date;
     }
 
-//    public void setGoal() {
-//        this.hours = 0;
-//        this.type = "";
-//        this.date = "";
-//    }
-
+    // EFFECTS: returns the exercise type for a goal
     public String getType() {
         return type;
     }
 
+    // EFFECTS: returns the date for this goal to be completed
     public String getDate() {
         return date;
     }
 
+    // EFFECTS: returns the number of hours this goal will take in integer
     public int getHours() {
         return hours;
     }
 
+    // EFFECTS: returns the name of this goal
     public String getName() {
         return (type + ": " + date + " for " + hours + " hours");
     }

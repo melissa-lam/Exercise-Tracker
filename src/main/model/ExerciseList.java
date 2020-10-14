@@ -2,30 +2,28 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Exercise;
 
 public class ExerciseList {
     private List<Exercise> exercises;
-    private Exercise exercise;
+    private List<String> names;
 
     public ExerciseList() {
-        this.exercises = new ArrayList<Exercise>();
+        this.exercises = new ArrayList<>();
+        this.names = new ArrayList<>();
     }
 
-//    public List<Exercise> getExerciseList() {
-//        return exercises;
-//    }
-
+    // EFFECTS: return the number of Exercises in this list of exercises
     public int length() {
         return exercises.size();
     }
 
+    // EFFECTS: return true if the exercise is contained in the list of exercises, false otherwise
     public boolean contains(Exercise e) {
         return exercises.contains(e);
     }
 
     // MODIFIES: this
-    // EFFECTS: adds an Exercise to the list
+    // EFFECTS: adds an Exercise to the list of exercises
     public void addExercise(Exercise e) {
         exercises.add(e);
     }
@@ -34,7 +32,12 @@ public class ExerciseList {
     // MODIFIES: this
     // EFFECTS: removes an Exercise from the list
     public void removeExercise(Exercise e) {
-        exercises.remove(e);
+        String name = e.getName();
+        for (Exercise exercise: exercises) {
+            if (name.equals(exercise.getName())) {
+                exercises.remove(exercise);
+            }
+        }
     }
 
     // REQUIRES: must have exercises on that date
@@ -42,7 +45,7 @@ public class ExerciseList {
     public ExerciseList exercisesFromDate(String d) {
         ExerciseList exercisesFromDate = new ExerciseList();
         for (Exercise e: exercises) {
-            if (e.getDate() == d) {
+            if (d.equals(e.getDate())) {
                 exercisesFromDate.addExercise(e);
             }
         }
@@ -54,7 +57,7 @@ public class ExerciseList {
     public ExerciseList exercisesFromType(String type) {
         ExerciseList exercisesFromType = new ExerciseList();
         for (Exercise e: exercises) {
-            if (e.getType() == type) {
+            if (type.equals(e.getType())) {
                 exercisesFromType.addExercise(e);
             }
         }
@@ -74,7 +77,7 @@ public class ExerciseList {
     public int getTotalHoursForDate(String date) {
         int totalHours = 0;
         for (Exercise e: exercises) {
-            if (e.getDate() == date) {
+            if (date.equals(e.getDate())) {
                 totalHours += e.getHours();
             }
         }
@@ -85,11 +88,18 @@ public class ExerciseList {
     public int getTotalHoursForType(String type) {
         int totalHours = 0;
         for (Exercise e: exercises) {
-            if (e.getType() == type) {
+            if (type.equals(e.getType())) {
                 totalHours += e.getHours();
             }
         }
         return totalHours;
+    }
+
+    public List<String> getNames() {
+        for (Exercise g: exercises) {
+            names.add(g.getName());
+        }
+        return names;
     }
 
 }
