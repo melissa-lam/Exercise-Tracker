@@ -26,6 +26,8 @@ public class Exercise {
         return hours;
     }
 
+    // EFFECTS: returns the name of an exercise in the form of:
+    //          Type: date for number of hours
     public String getName() {
         return (type + ": " + date + " for " + hours + " hours");
     }

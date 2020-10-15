@@ -10,11 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GoalsTest {
     private Goals testGoals;
-    private Goals testCompleted;
     private Goal goals1;
     private Goal goals2;
     private Goal goals3;
-    private List<String> names;
 
     @BeforeEach
     void runBefore() {
@@ -46,6 +44,11 @@ public class GoalsTest {
         assertEquals(2,testGoals.length());
         assertTrue(testGoals.contains(goals2));
         assertTrue(testGoals.contains(goals3));
+        testGoals.removeGoals(goals2);
+        assertEquals(1, testGoals.length());
+        assertTrue(testGoals.contains(goals3));
+        testGoals.removeGoals(goals3);
+        assertEquals(0, testGoals.length());
     }
 
     @Test
@@ -74,14 +77,6 @@ public class GoalsTest {
         assertEquals(0, noGoalsByType.length());
     }
 
-    @Test
-    public void testNumGoals() {
-        testGoals.addGoals(goals1);
-        testGoals.addGoals(goals2);
-        assertEquals(2, testGoals.numGoals());
-        testGoals.addGoals(goals3);
-        assertEquals(3, testGoals.numGoals());
-    }
 
     @Test
     public void testGetNames() {

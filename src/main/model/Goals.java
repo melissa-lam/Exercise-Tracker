@@ -5,17 +5,17 @@ import java.util.List;
 
 public class Goals {
     private List<Goal> goals;
-    private List<String> names;
 
     public Goals() {
         this.goals = new ArrayList<>();
-        this.names = new ArrayList<>();
     }
 
+    // EFFECTS: returns the size of the list in integer
     public int length() {
         return goals.size();
     }
 
+   // EFFECTS: returns true if the list contains the given goal, false otherwise
     public boolean contains(Goal g) {
         return goals.contains(g);
     }
@@ -26,16 +26,12 @@ public class Goals {
         goals.add(g);
     }
 
-    // REQUIRES: list not be empty
+    // REQUIRES: list not be empty and must have given goal in the list already
     // MODIFIES: this
     // EFFECTS: removes a goal from the current list
     public void removeGoals(Goal g) {
         String name = g.getName();
-        for (Goal goal: goals) {
-            if (name.equals(goal.getName())) {
-                goals.remove(goal);
-            }
-        }
+        goals.removeIf(goal -> name.equals(goal.getName()));
     }
 
     // EFFECTS: returns a list of goals made for that current date
@@ -60,12 +56,15 @@ public class Goals {
         return goalsByType;
     }
 
-    // EFFECTS: returns the number of completed goals
-    public int numGoals() {
-        return goals.size();
-    }
+    // EFFECTS: returns the number of goals
+//    public int numGoals() {
+//        return goals.size();
+//    }
 
+    // EFFECTS: returns the names of all the goals in the list in the form:
+    //          Type: date for number of hours
     public List<String> getNames() {
+        ArrayList<String> names = new ArrayList<>();
         for (Goal g: goals) {
             names.add(g.getName());
         }

@@ -26,7 +26,8 @@ public class Goal {
         return hours;
     }
 
-    // EFFECTS: returns the name of this goal
+    // EFFECTS: returns the name of this goal in the form:
+    //          Type: date for number of hours
     public String getName() {
         return (type + ": " + date + " for " + hours + " hours");
     }

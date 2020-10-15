@@ -10,14 +10,15 @@ public class ExerciseTracker {
     private Goal goal;
     private Goals goals;
     private Goals completedGoals;
-//    private Person person;
-//    private People people;
     private Scanner input;
 
     public ExerciseTracker() {
         runExerciseTracker();
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays the display menu and prompts the command to choose between viewing exercises or goal
+    //          information or to quit
     public void runExerciseTracker() {
         boolean keepGoing = true;
         String command = null;
@@ -38,65 +39,8 @@ public class ExerciseTracker {
         System.out.println("\nThank you!");
     }
 
-//    private void displayMenu() {
-//        System.out.println("\nSelect from:");
-//        System.out.println("\tp -> Choose profile");
-//        System.out.println("\tn -> Make a new profile");
-//        System.out.println("\tq -> Quit");
-//    }
-//
-//    private void processCommand(String command) {
-//        if (command.equals("p")) {
-//            choosePerson();
-//        } else if (command.equals("n")) {
-//            makeNewPerson();
-//        } else {
-//            System.out.println("Selection not valid...");
-//        }
-//    }
-//
-//    private void choosePerson() {
-//        System.out.println("Input profile name: ");
-//        input.nextLine();
-//        String name = input.nextLine();
-//        people.getPerson(name);
-//        runProfile();
-//    }
-//
-//    private void makeNewPerson() {
-//        System.out.println("Enter your profile details here:");
-//        System.out.println("Enter your name:");
-//        input.nextLine();
-//        String name = input.nextLine();
-//        System.out.println("Enter your age:");
-//        Integer age = Integer.valueOf(input.nextLine());
-//        System.out.println("Enter your height:");
-//        Integer height = Integer.valueOf(input.nextLine());
-//        System.out.println("Enter your weight:");
-//        Integer weight = Integer.valueOf(input.nextLine());
-//        Person person = new Person(name, age, height, weight);
-//        people.addPerson(person);
-//        System.out.println("You have made a new profile!");
-//    }
-
-//    private void runProfile() {
-//        boolean keepGoing = true;
-//        String command = null;
-//
-//        while (keepGoing) {
-//            displayMenuProfile();
-//            command = input.next();
-//            command = command.toLowerCase();
-//
-//            if (command.equals("q")) {
-//                keepGoing = false;
-//            } else {
-//                processCommandProfile(command);
-//            }
-//        }
-//        System.out.println("\nThank you!");
-//    }
-
+    // EFFECTS: displays options for users to choose from (one of: view exercise info, view goals info,
+    //          or quit)
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\te -> View Exercise Information");
@@ -104,17 +48,20 @@ public class ExerciseTracker {
         System.out.println("\tq -> Quit");
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes all the fields (exercise, exercises, goal, goals, completed goals), and
+    //          the scanner
     private void init() {
         exercise = new Exercise("","",0);
         exercises = new ExerciseList();
         goal = new Goal("", "", 0);
         goals = new Goals();
         completedGoals = new Goals();
-//        person = new Person("",0,0,0);
-//        people = new People();
         input = new Scanner(System.in);
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts command to execute when user chooses an option (one of e or g)
     private void processCommand(String command) {
         if (command.equals("e")) {
             exerciseInfo();
@@ -125,6 +72,9 @@ public class ExerciseTracker {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays the exercise display menu and prompts the command to choose between exercise options
+    //          or to go back
     private void exerciseInfo() {
         boolean keepGoing = true;
         String command = null;
@@ -143,6 +93,8 @@ public class ExerciseTracker {
         System.out.println("\nThank you!");
     }
 
+    // EFFECTS: displays options for users to choose from (one of: record exercise, remove exercise, or view past
+    //          exercise information, or go back)
     private void displayExerciseInfo() {
         System.out.println("\nSelect from:");
         System.out.println("\te -> Record an exercise");
@@ -151,6 +103,8 @@ public class ExerciseTracker {
         System.out.println("\tb -> Back");
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts command to execute when user chooses an option (one of e, re, or pe)
     private void processCommandExerciseInfo(String command) {
         if (command.equals("e")) {
             recordExercise();
@@ -163,6 +117,9 @@ public class ExerciseTracker {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays the goal display menu and prompts the command to choose between goal options
+    //          or to go back
     private void goalInfo() {
         boolean keepGoing = true;
         String command = null;
@@ -181,9 +138,11 @@ public class ExerciseTracker {
         System.out.println("\nThank you!");
     }
 
+    // EFFECTS: displays options for users to choose from (one of: record goal, remove goal, record completed goal,
+    //          view completed goals, view goals to do, or to go back)
     private void displayGoalInfo() {
         System.out.println("\nSelect from:");
-        System.out.println("\tg -> Record a goal");
+        System.out.println("\tg -> Record a goal you want to accomplish");
         System.out.println("\trg -> Remove a goal");
         System.out.println("\tcg -> Record a completed goal");
         System.out.println("\tvcg -> View completed goals");
@@ -191,6 +150,8 @@ public class ExerciseTracker {
         System.out.println("\tb -> Back");
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts command to execute when user chooses an option (one of g, rg, cg, vcg, or vtg)
     private void processCommandGoalInfo(String command) {
         if (command.equals("g")) {
             recordGoal();
@@ -308,41 +269,6 @@ public class ExerciseTracker {
         System.out.println("Here is a list of your goals: " + goals.getNames());
     }
 
-//    private void viewOtherInfo() {
-//        boolean keepGoing = true;
-//        String command = null;
-//
-//        while (keepGoing) {
-//            viewOtherInfoDisplay();
-//            command = input.next();
-//            command = command.toLowerCase();
-//
-//            if (command.equals("q")) {
-//                keepGoing = false;
-//            } else {
-//                processCommandOtherInfo(command);
-//            }
-//        }
-//        System.out.println("\nThank you!");
-//    }
-//
-//    private void viewOtherInfoDisplay() {
-//        System.out.println("\nSelect from:");
-//        System.out.println("\te -> View past exercises");
-//        System.out.println("\tg -> View goals");
-//        System.out.println("\tq -> Quit");
-//    }
-//
-//    private void processCommandOtherInfo(String command) {
-//        if (command.equals("e")) {
-//            viewPastExercises();
-//        } else if (command.equals("g")) {
-//            viewGoals();
-//        } else {
-//            System.out.println("Selection not valid...");
-//        }
-//    }
-
     private void viewPastExercises() {
         boolean keepGoing = true;
         String command = null;
@@ -379,10 +305,6 @@ public class ExerciseTracker {
         } else {
             System.out.println("Selection not valid...");
         }
-    }
-
-    private void viewGoals() {
-        System.out.println("Here is a list of your goals: " + goals.getNames());
     }
 
     private void viewExercisesByDate() {

@@ -34,17 +34,25 @@ public class ExerciseListTest {
         testExerciseList.addExercise(exercise2);
         assertTrue(testExerciseList.contains(exercise2));
         assertEquals(2, testExerciseList.length());
+        testExerciseList.addExercise(exercise3);
+        assertTrue(testExerciseList.contains(exercise3));
+        assertEquals(3,testExerciseList.length());
     }
 
     @Test
     public void testRemoveExercise() {
         testExerciseList.addExercise(exercise1);
         testExerciseList.addExercise(exercise2);
-        assertEquals(2, testExerciseList.length());
+        testExerciseList.addExercise(exercise3);
+        assertEquals(3, testExerciseList.length());
         testExerciseList.removeExercise(exercise1);
-        assertEquals(1, testExerciseList.length());
+        assertEquals(2, testExerciseList.length());
         assertTrue(testExerciseList.contains(exercise2));
+        assertTrue(testExerciseList.contains(exercise3));
         testExerciseList.removeExercise(exercise2);
+        assertEquals(1, testExerciseList.length());
+        assertTrue(testExerciseList.contains(exercise3));
+        testExerciseList.removeExercise(exercise3);
         assertEquals(0, testExerciseList.length());
     }
 

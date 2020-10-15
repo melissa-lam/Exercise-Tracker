@@ -5,11 +5,9 @@ import java.util.List;
 
 public class ExerciseList {
     private List<Exercise> exercises;
-    private List<String> names;
 
     public ExerciseList() {
         this.exercises = new ArrayList<>();
-        this.names = new ArrayList<>();
     }
 
     // EFFECTS: return the number of Exercises in this list of exercises
@@ -28,20 +26,16 @@ public class ExerciseList {
         exercises.add(e);
     }
 
-    // REQUIRES: list not be empty and must have given exercise in that list
+    // REQUIRES: list cannot be empty and must have given exercise in that list
     // MODIFIES: this
     // EFFECTS: removes an Exercise from the list
     public void removeExercise(Exercise e) {
         String name = e.getName();
-        for (Exercise exercise: exercises) {
-            if (name.equals(exercise.getName())) {
-                exercises.remove(exercise);
-            }
-        }
+        exercises.removeIf(exercise -> name.equals(exercise.getName()));
     }
 
     // REQUIRES: must have exercises on that date
-    // EFFECTS: returns an exercise list from that particular date
+    // EFFECTS: returns a new exercise list from that particular date
     public ExerciseList exercisesFromDate(String d) {
         ExerciseList exercisesFromDate = new ExerciseList();
         for (Exercise e: exercises) {
@@ -53,7 +47,7 @@ public class ExerciseList {
     }
 
     // REQUIRES: must have exercises from that type
-    // EFFECTS: returns an exercise list from that particular type
+    // EFFECTS: returns a new exercise list from that particular type
     public ExerciseList exercisesFromType(String type) {
         ExerciseList exercisesFromType = new ExerciseList();
         for (Exercise e: exercises) {
@@ -95,7 +89,10 @@ public class ExerciseList {
         return totalHours;
     }
 
+    // EFFECTS: gets the names of each exercise in the list in the form of:
+    //          Type: date for number of hours
     public List<String> getNames() {
+        ArrayList<String> names = new ArrayList<>();
         for (Exercise g: exercises) {
             names.add(g.getName());
         }
