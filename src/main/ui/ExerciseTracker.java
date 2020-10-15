@@ -168,6 +168,8 @@ public class ExerciseTracker {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: records a new exercise that has a type, date, and hours, and adds it to list of exercises
     private void recordExercise() {
         System.out.println("Record your exercise with the type, date, and hours!");
         System.out.println("Input your exercise type here:");
@@ -185,8 +187,12 @@ public class ExerciseTracker {
         System.out.println("Hours: " + hours);
         Exercise exercise = new Exercise(type, date, hours);
         exercises.addExercise(exercise);
+        System.out.println("You have added this exercise!");
     }
 
+    // REQUIRES: exercise inputted must be already in the exercises list
+    // MODIFIES: this
+    // EFFECTS: removes a current exercise from the list
     private void removeExercise() {
         System.out.println("Please input the exercise type, date, and hours you want to remove: ");
         System.out.println("Input exercise type here: ");
@@ -201,6 +207,8 @@ public class ExerciseTracker {
         System.out.println("You have removed this exercise.");
     }
 
+    // MODIFIES: this
+    // EFFECTS: records a new goal to do that has a type, date, and hours, and adds it to list of goals
     private void recordGoal() {
         System.out.println("Record your goal with the type, date, and hours!");
         System.out.println("Input your goal type here:");
@@ -221,6 +229,9 @@ public class ExerciseTracker {
         System.out.println("You have recorded this goal.");
     }
 
+    // REQUIRES: goal inputted must be already in the goals list
+    // MODIFIES: this
+    // EFFECTS: removes a current goal from the list
     private void removeGoal() {
         System.out.println("Please input the goal type, date, and hours you want to remove: ");
         System.out.println("Input goal type here: ");
@@ -241,6 +252,8 @@ public class ExerciseTracker {
         System.out.println("You have removed this goal.");
     }
 
+    // MODIFIES: this
+    // EFFECTS: records a completed goal that has a type, date, and hours, and adds it to list of completed goals
     private void recordCompletedGoal() {
         System.out.println("Record your completed goal with the type, date, and hours!");
         System.out.println("Input your goal type here:");
@@ -261,14 +274,18 @@ public class ExerciseTracker {
         goals.removeGoals(goal);
     }
 
+    // EFFECTS: shows your list of completed goals
     private void viewCompletedGoals() {
         System.out.println("Here is a list of your completed goals: " + completedGoals.getNames());
     }
 
+    // EFFECTS: shows your list of goals to do
     private void viewGoalsToDo() {
         System.out.println("Here is a list of your goals: " + goals.getNames());
     }
 
+    // EFFECTS: displays the view past exercises display menu and prompts the command to choose between viewing
+    //          different past exercise options or to go back
     private void viewPastExercises() {
         boolean keepGoing = true;
         String command = null;
@@ -287,6 +304,8 @@ public class ExerciseTracker {
         System.out.println("\nThank you!");
     }
 
+    // EFFECTS: displays options for users to choose from (one of: view by date, view by type, or view all exercises,
+    //          or to go back)
     private void viewPastExercisesDisplay() {
         System.out.println("\nSelect from:");
         System.out.println("\td -> View by Date");
@@ -295,6 +314,7 @@ public class ExerciseTracker {
         System.out.println("\tb -> Back");
     }
 
+    // EFFECTS: prompts command to execute when user chooses an option (one of d, t, or a)
     private void processCommandPastExercises(String command) {
         if (command.equals("d")) {
             viewExercisesByDate();
@@ -307,6 +327,7 @@ public class ExerciseTracker {
         }
     }
 
+    // EFFECTS: view exercises filtered by date
     private void viewExercisesByDate() {
         System.out.println("Input your date to filter here:");
         input.nextLine();
@@ -315,6 +336,7 @@ public class ExerciseTracker {
         System.out.println("Here is the list of exercises by " + date + ":" + byDate.getNames());
     }
 
+    // EFFECTS: view exercises filtered by type
     private void viewExercisesByType() {
         System.out.println("Input your type to filter here:");
         input.nextLine();
@@ -323,6 +345,7 @@ public class ExerciseTracker {
         System.out.println("Here is the list of exercises by " + type + ":" + byType.getNames());
     }
 
+    // EFFECTS: view all exercises unfiltered
     private void viewAllExercises() {
         System.out.println("Here is a list of all your exercises: " + exercises.getNames());
     }
