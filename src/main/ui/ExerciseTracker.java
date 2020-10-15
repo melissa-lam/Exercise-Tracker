@@ -272,6 +272,7 @@ public class ExerciseTracker {
         Goal goal = new Goal(type, date, hours);
         completedGoals.addGoals(goal);
         goals.removeGoals(goal);
+        System.out.println("This goal has been recorded as completed!");
     }
 
     // EFFECTS: shows your list of completed goals
