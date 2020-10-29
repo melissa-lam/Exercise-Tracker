@@ -1,0 +1,31 @@
+{
+  "exercises": [
+    {
+      "date": "Oct 13",
+      "hours": 1,
+      "type": "Cardio"
+    },
+    {
+      "date": "Oct 15",
+      "hours": 2,
+      "type": "Swimming"
+    }
+  ],
+  "completed goals": [{
+    "date": "Oct 28",
+    "hours": 4,
+    "type": "Basketball"
+  }],
+  "goals": [
+    {
+      "date": "Oct 16",
+      "hours": 1,
+      "type": "Arms"
+    },
+    {
+      "date": "Nov 1",
+      "hours": 1,
+      "type": "Jogging"
+    }
+  ]
+}

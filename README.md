@@ -32,4 +32,16 @@ do it.
 - As a user, I want to be able to set a goal to be completed.
 - As a user, I want to be able to view the list of goals left to do and list of completed goals.
 
+- As a user, I want to be able to save my record of goals, both completed and todo goals, to the file.
+- As a user, I want to be able to save my record of exercises to the file.
+- As a user, I want to be able to load my record of exercises from the file.
+- As a user, I want to be able to load my record of goals from the file.
+- As a user, when I select the quit option from the application menu, I want to be reminded to save my exercises to 
+file and have the option to do so or not.
+- As a user, when I select the quit option from the application menu, I want to be reminded to save my goals to 
+file and have the option to do so or not.
+- As a user, when I start the application, I want to be given the option to load my to-do list from file.
+
+
+
  

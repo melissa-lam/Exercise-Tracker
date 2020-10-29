@@ -1,9 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+import persistence.WritableArray;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Goals {
+public class Goals implements WritableArray {
     private List<Goal> goals;
 
     public Goals() {
@@ -34,6 +40,10 @@ public class Goals {
         goals.removeIf(goal -> name.equals(goal.getName()));
     }
 
+    public List<Goal> getGoals() {
+        return Collections.unmodifiableList(goals);
+    }
+
     // EFFECTS: returns a list of goals made for that current date
     public Goals goalsByDate(String date) {
         Goals goalsByDate = new Goals();
@@ -56,11 +66,6 @@ public class Goals {
         return goalsByType;
     }
 
-    // EFFECTS: returns the number of goals
-//    public int numGoals() {
-//        return goals.size();
-//    }
-
     // EFFECTS: returns the names of all the goals in the list in the form:
     //          Type: date for number of hours
     public List<String> getNames() {
@@ -69,6 +74,16 @@ public class Goals {
             names.add(g.getName());
         }
         return names;
+    }
+
+    @Override
+    public JSONArray toJsonArray() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Goal g : goals) {
+            jsonArray.put(g.toJson());
+        }
+        return jsonArray;
     }
 
 }

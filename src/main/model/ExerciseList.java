@@ -1,9 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+import persistence.WritableArray;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class ExerciseList {
+public class ExerciseList implements WritableArray {
     private List<Exercise> exercises;
 
     public ExerciseList() {
@@ -24,6 +30,10 @@ public class ExerciseList {
     // EFFECTS: adds an Exercise to the list of exercises
     public void addExercise(Exercise e) {
         exercises.add(e);
+    }
+
+    public List<Exercise> getExercises() {
+        return Collections.unmodifiableList(exercises);
     }
 
     // REQUIRES: list cannot be empty and must have given exercise in that list
@@ -97,6 +107,16 @@ public class ExerciseList {
             names.add(g.getName());
         }
         return names;
+    }
+
+    @Override
+    public JSONArray toJsonArray() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Exercise e : exercises) {
+            jsonArray.put(e.toJson());
+        }
+        return jsonArray;
     }
 
 }

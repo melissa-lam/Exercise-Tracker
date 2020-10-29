@@ -1,18 +1,27 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ExerciseTracker {
+    private static final String JSON_STORE = "./data/exercisetracker.json";
     private Exercise exercise;
     private ExerciseList exercises;
     private Goal goal;
     private Goals goals;
     private Goals completedGoals;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     public ExerciseTracker() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runExerciseTracker();
     }
 
@@ -45,6 +54,8 @@ public class ExerciseTracker {
         System.out.println("\nSelect from:");
         System.out.println("\te -> View Exercise Information");
         System.out.println("\tg -> View Goals Information");
+        System.out.println("\ts -> save exercise list to file");
+        System.out.println("\tl -> load exercise list from file");
         System.out.println("\tq -> Quit");
     }
 
@@ -67,6 +78,10 @@ public class ExerciseTracker {
             exerciseInfo();
         } else if (command.equals("g")) {
             goalInfo();
+        } else if (command.equals("s")) {
+            saveExerciseTracker();
+        } else if (command.equals("l")) {
+            loadExerciseTracker();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -271,7 +286,9 @@ public class ExerciseTracker {
         System.out.println("Hours: " + hours);
         Goal goal = new Goal(type, date, hours);
         completedGoals.addGoals(goal);
-        goals.removeGoals(goal);
+        if (goals.contains(goal)) {
+            goals.removeGoals(goal);
+        }
         System.out.println("This goal has been recorded as completed!");
     }
 
@@ -349,6 +366,28 @@ public class ExerciseTracker {
     // EFFECTS: view all exercises unfiltered
     private void viewAllExercises() {
         System.out.println("Here is a list of all your exercises: " + exercises.getNames());
+    }
+
+    private void saveExerciseTracker() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(exercises, goals, completedGoals);
+            jsonWriter.close();
+            System.out.println("Saved " + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void loadExerciseTracker() {
+        try {
+            exercises = jsonReader.readExercises();
+            goals = jsonReader.readGoals();
+            completedGoals = jsonReader.readCompletedGoals();
+            System.out.println("Loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
 }

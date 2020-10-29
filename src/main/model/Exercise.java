@@ -1,6 +1,9 @@
 package model;
 
-public class Exercise {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Exercise implements Writable {
     private int hours;
     private String type;
     private String date;
@@ -30,6 +33,15 @@ public class Exercise {
     //          Type: date for number of hours
     public String getName() {
         return (type + ": " + date + " for " + hours + " hours");
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("type", type);
+        json.put("date", date);
+        json.put("hours", hours);
+        return json;
     }
 
 }
