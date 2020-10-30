@@ -3,11 +3,13 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+// Represents a goal with type, date, and hours
 public class Goal implements Writable {
     private int hours;
     private String type;
     private String date;
 
+    // EFFECTS: Constructs a goal with type, date, and hours
     public Goal(String type, String date, int hours) {
         this.hours = hours;
         this.type = type;
@@ -35,6 +37,7 @@ public class Goal implements Writable {
         return (type + ": " + date + " for " + hours + " hours");
     }
 
+    // EFFECTS: returns a new json object of a goal
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

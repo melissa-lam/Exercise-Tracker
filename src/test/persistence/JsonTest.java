@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import model.Exercise;
 import model.Goal;
 
+// Test for Json objects
+// Code modified from JsonSerializationDemo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 public class JsonTest {
     protected void checkExercise(String type, String date, int hours, Exercise exercise) {
         assertEquals(type, exercise.getType());

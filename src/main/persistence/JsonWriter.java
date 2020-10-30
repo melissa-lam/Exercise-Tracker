@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 
+// Represents a writer that writes JSON representation of workroom to file
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -24,6 +25,8 @@ public class JsonWriter {
         writer = new PrintWriter(new File(destination));
     }
 
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of exercise list, goals, and completed goals to file
     public void write(ExerciseList el, Goals g, Goals cg) {
         JSONArray jsonEL = el.toJsonArray();
         JSONArray jsonG = g.toJsonArray();

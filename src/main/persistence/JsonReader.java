@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -21,24 +22,31 @@ public class JsonReader {
         this.source = source;
     }
 
+    // EFFECTS: reads exercises from file and returns it;
+    // throws IOException if an error occurs reading data from file
     public ExerciseList readExercises() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseExerciseList((JSONArray) jsonObject.get("exercises"));
     }
 
+    // EFFECTS: reads goals from file and returns it;
+    // throws IOException if an error occurs reading data from file
     public Goals readGoals() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseGoals((JSONArray) jsonObject.get("goals"));
     }
 
+    // EFFECTS: reads completed goals from file and returns it;
+    // throws IOException if an error occurs reading data from file
     public Goals readCompletedGoals() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseGoals((JSONArray) jsonObject.get("completed goals"));
     }
 
+    // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -48,12 +56,15 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECTS: parses exercise list from JSON array and returns it
     private ExerciseList parseExerciseList(JSONArray jsonArray) {
         ExerciseList el = new ExerciseList();
         addExercises(el, jsonArray);
         return el;
     }
 
+    // MODIFIES: el
+    // EFFECTS: parses exercise from JSON array and adds them to exercise list
     private void addExercises(ExerciseList el, JSONArray jsonArray) {
         for (Object json : jsonArray) {
             JSONObject nextExercise = (JSONObject) json;
@@ -71,12 +82,15 @@ public class JsonReader {
         el.addExercise(exercise);
     }
 
+    // EFFECTS: parses goals from JSON array and returns it
     private Goals parseGoals(JSONArray jsonArray) {
         Goals g = new Goals();
         addGoals(g, jsonArray);
         return g;
     }
 
+    // MODIFIES: g
+    // EFFECTS: parses goals from JSON array and adds them to goals list
     private void addGoals(Goals g, JSONArray jsonArray) {
         for (Object json : jsonArray) {
             JSONObject nextGoal = (JSONObject) json;
@@ -85,7 +99,7 @@ public class JsonReader {
     }
 
     // MODIFIES: g
-    // EFFECTS: parses exercise from JSON object and adds it to exercise list
+    // EFFECTS: parses goals from JSON object and adds it to goals list
     private void addGoal(Goals g, JSONObject jsonObject) {
         String type = jsonObject.getString("type");
         String date = jsonObject.getString("date");

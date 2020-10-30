@@ -3,11 +3,13 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+// Represents an exercise that has a type, date, and hours
 public class Exercise implements Writable {
     private int hours;
     private String type;
     private String date;
 
+    // EFFECTS: construct an exercise with type, date, and hours
     public Exercise(String type, String date, int hours) {
         this.type = type;
         this.date = date;
@@ -35,6 +37,7 @@ public class Exercise implements Writable {
         return (type + ": " + date + " for " + hours + " hours");
     }
 
+    // EFFECTS: returns a new json object of an exercise
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

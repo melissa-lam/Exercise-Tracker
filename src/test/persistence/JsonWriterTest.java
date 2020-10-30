@@ -13,6 +13,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// Tests for JsonWriter class
+// Code modified from JsonSerializationDemo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 public class JsonWriterTest extends JsonTest{
     @Test
     void testWriterInvalidFile() {

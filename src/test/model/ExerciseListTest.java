@@ -8,6 +8,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// Tests for exercise list class
 public class ExerciseListTest {
     private ExerciseList testExerciseList;
     private Exercise exercise1;

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// Tests for goal class
 public class GoalTest {
     private Goal goal;
     private Goal goal1;

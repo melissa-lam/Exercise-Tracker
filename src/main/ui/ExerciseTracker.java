@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+// Represents the exercise tracker application
 public class ExerciseTracker {
     private static final String JSON_STORE = "./data/exercisetracker.json";
     private Exercise exercise;
@@ -19,6 +20,7 @@ public class ExerciseTracker {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    // EFFECTS: constructs exercise tracker and runs application
     public ExerciseTracker() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -286,9 +288,7 @@ public class ExerciseTracker {
         System.out.println("Hours: " + hours);
         Goal goal = new Goal(type, date, hours);
         completedGoals.addGoals(goal);
-        if (goals.contains(goal)) {
-            goals.removeGoals(goal);
-        }
+        goals.removeGoals(goal);
         System.out.println("This goal has been recorded as completed!");
     }
 
@@ -368,6 +368,7 @@ public class ExerciseTracker {
         System.out.println("Here is a list of all your exercises: " + exercises.getNames());
     }
 
+    // EFFECTS: saves the exercise tracker to file
     private void saveExerciseTracker() {
         try {
             jsonWriter.open();
@@ -379,6 +380,8 @@ public class ExerciseTracker {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads exercise tracker from file
     private void loadExerciseTracker() {
         try {
             exercises = jsonReader.readExercises();

@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Represents a list of exercises
 public class ExerciseList implements WritableArray {
     private List<Exercise> exercises;
 
+    // EFFECTS: constructs an array list of exercise
     public ExerciseList() {
         this.exercises = new ArrayList<>();
     }
@@ -109,6 +111,7 @@ public class ExerciseList implements WritableArray {
         return names;
     }
 
+    // EFFECTS: returns a json array of json objects of exercises
     @Override
     public JSONArray toJsonArray() {
         JSONArray jsonArray = new JSONArray();

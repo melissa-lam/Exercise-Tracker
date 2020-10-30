@@ -76,6 +76,7 @@ public class Goals implements WritableArray {
         return names;
     }
 
+    // EFFECTS: returns a json array of json objects of goals
     @Override
     public JSONArray toJsonArray() {
         JSONArray jsonArray = new JSONArray();
