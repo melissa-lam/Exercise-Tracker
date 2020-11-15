@@ -42,7 +42,7 @@ public class MainFrame extends JFrame {
         this.setResizable(true);
         this.setTitle("Exercise Tracker");
         this.setJMenuBar(menuBar);
-//        this.add(makeMainPanel());
+        this.add(makeMainPanel());
         fileMenu();
         trackerMenu();
         this.getContentPane().setBackground(new Color(239,222,205));
@@ -60,7 +60,6 @@ public class MainFrame extends JFrame {
         label.setForeground(new Color(0,0,0));
         panel.add(label);
         return panel;
-//        this.add(panel);
     }
 
     public void fileMenu() {

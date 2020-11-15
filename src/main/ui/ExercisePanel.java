@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.awt.GridBagConstraints.*;
+
 public class ExercisePanel extends JPanel implements ListSelectionListener {
     private JLabel type;
     private JLabel date;
@@ -28,74 +30,122 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     public ExercisePanel() {
         this.setLayout(new GridBagLayout());
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        createTypePane();
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        createDatePane();
+//        gbc.gridx = 0;
+//        gbc.gridy = 0;
+//        gbc.gridheight = 2;
+//        gbc.gridwidth = 10;
+//        gbc.fill = HORIZONTAL;
+//        topPanel();
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        createHoursPane();
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        createAddExerciseButton();
-
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.gridheight = 3;
-        createList();
-
-        gbc.gridx = 2;
-        gbc.gridy = 3;
-        createRemoveExerciseButton();
+//        gbc.weightx = 0.5;
+//        gbc.anchor = LINE_START;
+        leftPanel();
+//        createTypePane();
 //
-//        JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.add(this);
-//        frame.setVisible(true);
+//        gbc.gridx = 0;
+//        gbc.gridy = 1;
+//        gbc.weightx = 0.5;
+////        gbc.anchor = LINE_START;
+//        createDatePane();
+//
+//        gbc.gridx = 0;
+//        gbc.gridy = 2;
+//        gbc.weightx = 0.5;
+////        gbc.anchor = LINE_START;
+//        createHoursPane();
+//
+//        gbc.gridx = 0;
+//        gbc.gridy = 3;
+//        gbc.weightx = 0.5;
+////        gbc.anchor = LINE_START;
+//        createAddExerciseButton();
+
+//        gbc.gridx = 1;
+//        add(Box.createHorizontalStrut(5));
+//        add(new JSeparator(SwingConstants.VERTICAL));
+//        add(Box.createHorizontalStrut(5));
+
+        gbc.gridx = 4;
+        gbc.gridy = 2;
+//        gbc.gridheight = 3;
+//        gbc.weightx = 0.5;
+//        gbc.anchor = LINE_END;
+        rightPanel();
+//        createList();
+
+//        gbc.gridx = 2;
+//        gbc.gridy = 3;
+//        gbc.weightx = 0.5;
+////        gbc.anchor = LINE_END;
+//        createRemoveExerciseButton();
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridheight = 2;
+        gbc.gridwidth = 10;
+        gbc.fill = HORIZONTAL;
+        bottomPanel();
     }
 
-    public void createTypePane() {
+    public void topPanel() {
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(0,0,0));
+        panel.setBackground(new Color(204,255,229));
+        JLabel label = new JLabel("Track your exercises here!");
+        panel.add(label);
+        this.add(panel, gbc);
+    }
+
+    public JPanel createTypePane() {
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBackground(new Color(255, 204, 204));
         type = new JLabel("Type:");
         typeText = new JTextField();
         typeText.setPreferredSize(new Dimension(100,30));
-        this.add(type, gbc);
-        gbc.gridx++;
-        this.add(typeText, gbc);
+        panel.add(type);
+        panel.add(typeText);
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return panel;
+//        this.add(panel, gbc);
+//        gbc.gridx++;
+//        this.add(typeText, gbc);
     }
 
-    public void createDatePane() {
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(0,0,0));
+    public JPanel createDatePane() {
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBackground(new Color(255, 204, 204));
         date = new JLabel("Date:");
         dateText = new JTextField();
         dateText.setPreferredSize(new Dimension(100,30));
-        this.add(date, gbc);
-        gbc.gridx++;
-        this.add(dateText, gbc);
+        panel.add(date);
+        panel.add(dateText);
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return panel;
+//        this.add(panel, gbc);
+//        gbc.gridx++;
+//        this.add(dateText, gbc);
 
     }
 
-    public void createHoursPane() {
+    public JPanel createHoursPane() {
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(0,0,0));
+        panel.setBackground(new Color(255, 204, 204));
         hours = new JLabel("Hours:");
         hoursText = new JTextField();
         hoursText.setPreferredSize(new Dimension(100,30));
-        this.add(hours, gbc);
-        gbc.gridx++;
-        this.add(hoursText, gbc);
-
+        panel.add(hours);
+        panel.add(hoursText);
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return panel;
+//        this.add(panel, gbc);
+//        gbc.gridx++;
+//        this.add(hoursText, gbc);
 
     }
 
-    public void createAddExerciseButton() {
+    public JPanel createAddExerciseButton() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(255, 204, 204));
         addExerciseButton = new JButton("Add Exercise");
         addExerciseButton.addActionListener(new ActionListener() {
             @Override
@@ -104,25 +154,51 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                 exercise = new Exercise(typeText.getText(), dateText.getText(), hours);
                 exercises.addExercise(exercise);
                 listModel.addElement(exercise.getName());
+
+                typeText.requestFocusInWindow();
+                typeText.setText("");
+                dateText.requestFocusInWindow();
+                dateText.setText("");
+                hoursText.requestFocusInWindow();
+                hoursText.setText("");
             }
         });
         addExerciseButton.setEnabled(true);
-        this.add(addExerciseButton, gbc);
+        panel.add(addExerciseButton);
+        return panel;
+//        this.add(addExerciseButton, gbc);
     }
 
-    public void createList() {
+    public void leftPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(createTypePane());
+        panel.add(createDatePane());
+        panel.add(createHoursPane());
+        panel.add(createAddExerciseButton());
+        this.add(panel, gbc);
+    }
+
+    public JPanel createList() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(255, 204, 204));
         for (Exercise e: exercises.getExercises()) {
             listModel.addElement(e.getName());
         }
         list = new JList(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
         JScrollPane scrollPane = new JScrollPane(list);
-        scrollPane.setPreferredSize(new Dimension(250,80));
-
-        this.add(scrollPane, gbc);
+        scrollPane.setPreferredSize(new Dimension(250,110));
+        panel.add(scrollPane);
+        return panel;
+//        this.add(scrollPane, gbc);
 
     }
 
-    public void createRemoveExerciseButton() {
+    public JPanel createRemoveExerciseButton() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(255, 204, 204));
         removeExerciseButton = new JButton("Remove Exercise");
         removeExerciseButton.addActionListener(new ActionListener() {
             @Override
@@ -144,7 +220,26 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                 }
             }
         });
-        this.add(removeExerciseButton, gbc);
+        removeExerciseButton.setEnabled(true);
+        panel.add(removeExerciseButton);
+        return panel;
+//        this.add(removeExerciseButton, gbc);
+    }
+
+    public void rightPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(createList());
+        panel.add(createRemoveExerciseButton());
+        this.add(panel, gbc);
+    }
+
+    public void bottomPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(204,255,229));
+        JLabel label = new JLabel("Keep up the great work!");
+        panel.add(label);
+        this.add(panel, gbc);
     }
 
     @Override
