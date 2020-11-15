@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Represents a list of goals
 public class Goals implements WritableArray {
     private List<Goal> goals;
 
