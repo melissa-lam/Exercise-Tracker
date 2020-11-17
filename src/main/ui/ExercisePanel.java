@@ -29,59 +29,28 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
 
     public ExercisePanel() {
         this.setLayout(new GridBagLayout());
-
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
-//        gbc.gridheight = 2;
-//        gbc.gridwidth = 10;
-//        gbc.fill = HORIZONTAL;
-//        topPanel();
+        this.setBackground(new Color(204,229,255));
+        removeExerciseButton = new JButton("Remove Exercise");
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
-//        gbc.weightx = 0.5;
-//        gbc.anchor = LINE_START;
-        leftPanel();
-//        createTypePane();
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        gbc.weightx = 0.5;
-////        gbc.anchor = LINE_START;
-//        createDatePane();
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 2;
-//        gbc.weightx = 0.5;
-////        gbc.anchor = LINE_START;
-//        createHoursPane();
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 3;
-//        gbc.weightx = 0.5;
-////        gbc.anchor = LINE_START;
-//        createAddExerciseButton();
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        gbc.gridwidth = 10;
+        gbc.fill = HORIZONTAL;
+        topPanel();
 
-//        gbc.gridx = 1;
-//        add(Box.createHorizontalStrut(5));
-//        add(new JSeparator(SwingConstants.VERTICAL));
-//        add(Box.createHorizontalStrut(5));
+        gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        leftPanel();
 
         gbc.gridx = 4;
-        gbc.gridy = 2;
-//        gbc.gridheight = 3;
-//        gbc.weightx = 0.5;
-//        gbc.anchor = LINE_END;
+        gbc.gridy = 3;
         rightPanel();
-//        createList();
 
-//        gbc.gridx = 2;
-//        gbc.gridy = 3;
-//        gbc.weightx = 0.5;
-////        gbc.anchor = LINE_END;
-//        createRemoveExerciseButton();
         gbc.gridx = 0;
-        gbc.gridy = 8;
+        gbc.gridy = 9;
         gbc.gridheight = 2;
         gbc.gridwidth = 10;
         gbc.fill = HORIZONTAL;
@@ -106,9 +75,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         panel.add(typeText);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         return panel;
-//        this.add(panel, gbc);
-//        gbc.gridx++;
-//        this.add(typeText, gbc);
     }
 
     public JPanel createDatePane() {
@@ -121,10 +87,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         panel.add(dateText);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         return panel;
-//        this.add(panel, gbc);
-//        gbc.gridx++;
-//        this.add(dateText, gbc);
-
     }
 
     public JPanel createHoursPane() {
@@ -137,10 +99,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         panel.add(hoursText);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         return panel;
-//        this.add(panel, gbc);
-//        gbc.gridx++;
-//        this.add(hoursText, gbc);
-
     }
 
     public JPanel createAddExerciseButton() {
@@ -161,12 +119,12 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                 dateText.setText("");
                 hoursText.requestFocusInWindow();
                 hoursText.setText("");
+                removeExerciseButton.setEnabled(true);
             }
         });
         addExerciseButton.setEnabled(true);
         panel.add(addExerciseButton);
         return panel;
-//        this.add(addExerciseButton, gbc);
     }
 
     public void leftPanel() {
@@ -192,14 +150,13 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         scrollPane.setPreferredSize(new Dimension(250,110));
         panel.add(scrollPane);
         return panel;
-//        this.add(scrollPane, gbc);
 
     }
 
     public JPanel createRemoveExerciseButton() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 204, 204));
-        removeExerciseButton = new JButton("Remove Exercise");
+//        removeExerciseButton = new JButton("Remove Exercise");
         removeExerciseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -207,11 +164,10 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                 listModel.remove(index);
                 int size = listModel.getSize();
 
-                if (size == 0) { //Nobody's left, disable firing.
+                if (size == 0) {
                     removeExerciseButton.setEnabled(false);
-                } else { //Select an index.
+                } else {
                     if (index == listModel.getSize()) {
-                        //removed item in last position
                         index--;
                     }
 
@@ -220,10 +176,8 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                 }
             }
         });
-        removeExerciseButton.setEnabled(true);
         panel.add(removeExerciseButton);
         return panel;
-//        this.add(removeExerciseButton, gbc);
     }
 
     public void rightPanel() {

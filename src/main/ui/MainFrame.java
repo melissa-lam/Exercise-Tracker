@@ -18,7 +18,6 @@ public class MainFrame extends JFrame {
     ImageIcon workoutImage = new ImageIcon("./data/workout.png");
     ImageIcon loadImage = new ImageIcon("./data/load.jpg");
     ImageIcon saveImage = new ImageIcon("./data/save.png");
-    JLabel label;
     JMenuBar menuBar = new JMenuBar();
     JMenu fileMenu;
     JMenu trackerMenu;
@@ -29,37 +28,56 @@ public class MainFrame extends JFrame {
     JMenuItem goalsItem;
     JsonWriter jsonWriter;
     JsonReader jsonReader;
-    ExerciseList exercises;
-    Goals goals;
-    Goals completedGoals;
+    ExerciseList exercises = new ExerciseList();
+    Goals goals = new Goals();
+    Goals completedGoals = new Goals();
+    JPanel masterPanel;
+    JPanel mainPanel;
+    JPanel exercisePanel;
+    JPanel goalsPanel;
+    CardLayout cl = new CardLayout();
 
     public MainFrame() {
-        //label.setOpaque(true);
-        //makeTitleLabel();
-//        this.setBounds(0,0,50,50);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        masterPanel = new JPanel();
+        masterPanel.setLayout(cl);
+        mainPanel = new JPanel();
+        exercisePanel = new ExercisePanel();
+        goalsPanel = new GoalsPanel();
+
+        masterPanel.add(mainPanel, "mPanel");
+        masterPanel.add(exercisePanel, "ePanel");
+        masterPanel.add(goalsPanel, "gPanel");
+
+        cl.show(masterPanel, "mPanel");
+
+        makeMainPanel();
+        fileMenu();
+        trackerMenu();
+        this.setJMenuBar(menuBar);
+        this.add(masterPanel);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500,500);
         this.setResizable(true);
         this.setTitle("Exercise Tracker");
-        this.setJMenuBar(menuBar);
-        this.add(makeMainPanel());
-        fileMenu();
-        trackerMenu();
+
         this.getContentPane().setBackground(new Color(239,222,205));
-//        this.pack();
         this.setVisible(true);
 
     }
 
     public JPanel makeMainPanel() {
-        JPanel panel = new JPanel();
-        label = new JLabel();
+        mainPanel.setBackground(new Color(204,229,255));
+        JLabel label = new JLabel();
         label.setText("Start tracking your workout routine!");
-        label.setFont(new Font("Arial", Font.BOLD, 30));
+        label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setIcon(workoutImage);
-        label.setForeground(new Color(0,0,0));
-        panel.add(label);
-        return panel;
+        JLabel label2 = new JLabel();
+//        label2.setText();
+        mainPanel.add(label);
+        return mainPanel;
     }
 
     public void fileMenu() {
@@ -79,7 +97,7 @@ public class MainFrame extends JFrame {
         mainItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("test");
+                cl.show(masterPanel, "mPanel");
             }
         });
     }
@@ -142,9 +160,7 @@ public class MainFrame extends JFrame {
         exercisesItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                add(new ExercisePanel());
-                revalidate();
-                repaint();
+                cl.show(masterPanel, "ePanel");
             }
         });
     }
@@ -154,39 +170,8 @@ public class MainFrame extends JFrame {
         goalsItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                add(new GoalsPanel());
-                revalidate();
-                repaint();
+                cl.show(masterPanel, "gPanel");
             }
         });
     }
-
-//    public void exerciseMenu() {
-//        exerciseMenu = new JMenu("Exercises");
-//        exerciseMenu.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (e.getSource() == exerciseMenu) {
-//                    new ExercisePanel2();
-//                }
-//            }
-//        });
-//        menuBar.add(exerciseMenu);
-//    }
-//
-//    public void goalsMenu() {
-//        goalsMenu = new JMenu("Goals");
-//        goalsMenu.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (e.getSource() == goalsMenu) {
-//                    System.out.println("goals menu");
-//                }
-//            }
-//        });
-//        menuBar.add(goalsMenu);
-//    }
-
-
-
 }

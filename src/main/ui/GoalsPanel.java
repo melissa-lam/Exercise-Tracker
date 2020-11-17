@@ -12,6 +12,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.awt.GridBagConstraints.HORIZONTAL;
+
 public class GoalsPanel extends JPanel implements ListSelectionListener {
     private JLabel type;
     private JLabel date;
@@ -29,33 +31,41 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
 
     public GoalsPanel() {
         this.setLayout(new GridBagLayout());
+        this.setBackground(new Color(204,229,255));
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        leftPanel();
-//        createTypePane();
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        createDatePane();
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 2;
-//        createHoursPane();
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 3;
-//        createAddGoalButton();
+        gbc.gridheight = 2;
+        gbc.gridwidth = 10;
+        gbc.fill = HORIZONTAL;
+        topPanel();
 
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.gridheight = 3;
+        gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        leftPanel();
+
+
+        gbc.gridx = 4;
+        gbc.gridy = 2;
         rightPanel();
-//        createList();
-//
-//        gbc.gridx = 2;
-//        gbc.gridy = 3;
-//        createRemoveGoalButton();
+
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridheight = 2;
+        gbc.gridwidth = 10;
+        gbc.fill = HORIZONTAL;
+        bottomPanel();
+
+    }
+
+    public void topPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(204,255,229));
+        JLabel label = new JLabel("Make your goals here!");
+        panel.add(label);
+        this.add(panel, gbc);
     }
 
     public JPanel createTypePane() {
@@ -67,9 +77,6 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         panel.add(type);
         panel.add(typeText);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        this.add(panel, gbc);
-//        gbc.gridx++;
-//        this.add(typeText, gbc);
         return panel;
     }
 
@@ -82,9 +89,6 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         panel.add(date);
         panel.add(dateText);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        this.add(panel, gbc);
-//        gbc.gridx++;
-//        this.add(dateText, gbc);
         return panel;
 
     }
@@ -98,9 +102,6 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         panel.add(hours);
         panel.add(hoursText);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        this.add(panel, gbc);
-//        gbc.gridx++;
-//        this.add(hoursText, gbc);
         return panel;
     }
 
@@ -115,12 +116,12 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
                 goal = new Goal(typeText.getText(), dateText.getText(), hours);
                 goals.addGoals(goal);
                 listModel.addElement(goal.getName());
+                removeGoalButton.setEnabled(true);
             }
         });
         addGoalButton.setEnabled(true);
         panel.add(addGoalButton);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        this.add(addGoalButton, gbc);
         return panel;
     }
 
@@ -180,6 +181,14 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(createList());
         panel.add(createRemoveGoalButton());
+        this.add(panel, gbc);
+    }
+
+    public void bottomPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(204,255,229));
+        JLabel label = new JLabel("Keep up the great work!");
+        panel.add(label);
         this.add(panel, gbc);
     }
 
