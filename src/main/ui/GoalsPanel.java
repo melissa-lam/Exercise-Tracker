@@ -1,7 +1,5 @@
 package ui;
 
-import model.Exercise;
-import model.ExerciseList;
 import model.Goal;
 import model.Goals;
 
@@ -23,10 +21,13 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
     private JTextField hoursText;
     private JButton addGoalButton;
     private JButton removeGoalButton;
+    private JButton completeGoalButton;
     private JList list;
     private DefaultListModel listModel = new DefaultListModel();
     private Goal goal;
+    private Goal completedGoal;
     private Goals goals = new Goals();
+    private Goals completedGoals = new Goals();
     private GridBagConstraints gbc = new GridBagConstraints();
 
     public GoalsPanel() {
@@ -48,6 +49,10 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
 
 
         gbc.gridx = 4;
+        gbc.gridy = 2;
+        middlePanel();
+
+        gbc.gridx = 8;
         gbc.gridy = 2;
         rightPanel();
 
@@ -135,7 +140,7 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
-    public JPanel createList() {
+    public JPanel createGoalsList() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
         for (Goal g: goals.getGoals()) {
@@ -143,7 +148,7 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         }
         list = new JList(listModel);
         JScrollPane scrollPane = new JScrollPane(list);
-        scrollPane.setPreferredSize(new Dimension(250,110));
+        scrollPane.setPreferredSize(new Dimension(200,110));
         panel.add(scrollPane);
         return panel;
     }
@@ -176,13 +181,55 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
-    public void rightPanel() {
+    public void middlePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.add(createList());
+        panel.add(createGoalsList());
         panel.add(createRemoveGoalButton());
         this.add(panel, gbc);
     }
+
+    public JPanel createCompletedGoalsList() {
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBackground(new Color(255, 204, 204));
+        for (Goal g: completedGoals.getGoals()) {
+            listModel.addElement(g.getName());
+        }
+        list = new JList(listModel);
+        JScrollPane scrollPane = new JScrollPane(list);
+        scrollPane.setPreferredSize(new Dimension(200,110));
+        panel.add(scrollPane);
+        return panel;
+    }
+
+    public JPanel createAddCompletedGoalButton() {
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBackground(new Color(255, 204, 204));
+        completeGoalButton = new JButton("Complete Goal");
+        completeGoalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int hours = Integer.parseInt(hoursText.getText());
+                completedGoal = new Goal(typeText.getText(), dateText.getText(), hours);
+                completedGoals.addGoals(completedGoal);
+                listModel.addElement(completedGoal.getName());
+//                removeGoalButton.setEnabled(true);
+            }
+        });
+        completeGoalButton.setEnabled(true);
+        panel.add(completeGoalButton);
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return panel;
+    }
+
+    public void rightPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(createCompletedGoalsList());
+        panel.add(createAddCompletedGoalButton());
+        this.add(panel, gbc);
+    }
+
 
     public void bottomPanel() {
         JPanel panel = new JPanel();

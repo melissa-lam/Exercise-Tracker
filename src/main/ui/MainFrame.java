@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
     ImageIcon workoutImage = new ImageIcon("./data/workout.png");
     ImageIcon loadImage = new ImageIcon("./data/load.jpg");
     ImageIcon saveImage = new ImageIcon("./data/save.png");
+    ImageIcon goalsImage = new ImageIcon("./data/goals.png");
     JMenuBar menuBar = new JMenuBar();
     JMenu fileMenu;
     JMenu trackerMenu;
@@ -59,7 +60,7 @@ public class MainFrame extends JFrame {
         this.add(masterPanel);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500,500);
+        this.setSize(500,400);
         this.setResizable(true);
         this.setTitle("Exercise Tracker");
 
@@ -73,10 +74,42 @@ public class MainFrame extends JFrame {
         JLabel label = new JLabel();
         label.setText("Start tracking your workout routine!");
         label.setFont(new Font("Arial", Font.BOLD, 20));
-        label.setIcon(workoutImage);
-        JLabel label2 = new JLabel();
-//        label2.setText();
+//        label.setIcon(workoutImage);
+
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+        panel1.setBackground(new Color(204,204,255));
+        panel1.setPreferredSize(new Dimension(400,75));
+        JLabel header1 = new JLabel("Track your exercises:");
+        header1.setIcon(workoutImage);
+        JLabel text1 = new JLabel("Record your exercises by the type, date, and number of hours!");
+
+        Dimension minSize = new Dimension(18,18);
+        Dimension prefSize = new Dimension(18,18);
+        Dimension maxSize = new Dimension(Short.MAX_VALUE, 18);
+
+        panel1.add(new Box.Filler(minSize, prefSize, maxSize));
+        panel1.add(header1);
+//        panel1.add(new Box.Filler(minSize, prefSize, maxSize));
+        panel1.add(text1);
+
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
+        panel2.setBackground(new Color(204,204,255));
+        panel2.setPreferredSize(new Dimension(400,100));
+        JLabel header2 = new JLabel("Track your goals:");
+        header2.setIcon(goalsImage);
+        JLabel text2 = new JLabel("Set your fitness goal for today!");
+        JLabel text21 = new JLabel("Keep track of completed goals!");
+        panel2.add(new Box.Filler(minSize, prefSize, maxSize));
+        panel2.add(header2);
+        panel2.add(text2);
+        panel2.add(text21);
+
         mainPanel.add(label);
+        mainPanel.add(panel1);
+        mainPanel.add(panel2);
+
         return mainPanel;
     }
 
@@ -157,6 +190,7 @@ public class MainFrame extends JFrame {
 
     public void exercisesItem() {
         exercisesItem = new JMenuItem("Exercises");
+        exercisesItem.setIcon(workoutImage);
         exercisesItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -167,6 +201,7 @@ public class MainFrame extends JFrame {
 
     public void goalsItem() {
         goalsItem = new JMenuItem("Goals");
+        goalsItem.setIcon(goalsImage);
         goalsItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
