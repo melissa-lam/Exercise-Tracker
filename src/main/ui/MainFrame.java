@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
     Goals completedGoals = new Goals();
     JPanel masterPanel;
     JPanel mainPanel;
-    JPanel exercisePanel;
+    ExercisePanel exercisePanel;
     JPanel goalsPanel;
     CardLayout cl = new CardLayout();
 
@@ -46,6 +46,7 @@ public class MainFrame extends JFrame {
         mainPanel = new JPanel();
         exercisePanel = new ExercisePanel();
         goalsPanel = new GoalsPanel();
+        exercises = exercisePanel.getExercises();
 
         masterPanel.add(mainPanel, "mPanel");
         masterPanel.add(exercisePanel, "ePanel");
@@ -90,7 +91,6 @@ public class MainFrame extends JFrame {
 
         panel1.add(new Box.Filler(minSize, prefSize, maxSize));
         panel1.add(header1);
-//        panel1.add(new Box.Filler(minSize, prefSize, maxSize));
         panel1.add(text1);
 
         JPanel panel2 = new JPanel();
@@ -163,6 +163,7 @@ public class MainFrame extends JFrame {
         saveItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("save");
                 saveExerciseTracker();
             }
         });

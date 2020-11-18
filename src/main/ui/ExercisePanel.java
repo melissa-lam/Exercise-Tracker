@@ -24,7 +24,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     private JList list;
     private DefaultListModel listModel = new DefaultListModel();
     private Exercise exercise;
-    private ExerciseList exercises = new ExerciseList();
+    public ExerciseList exercises = new ExerciseList();
     private GridBagConstraints gbc = new GridBagConstraints();
 
     public ExercisePanel() {
@@ -55,6 +55,10 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         gbc.gridwidth = 10;
         gbc.fill = HORIZONTAL;
         bottomPanel();
+    }
+
+    public ExerciseList getExercises() {
+        return exercises;
     }
 
     public void topPanel() {
@@ -109,6 +113,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int hours = Integer.parseInt(hoursText.getText());
+
                 exercise = new Exercise(typeText.getText(), dateText.getText(), hours);
                 exercises.addExercise(exercise);
                 listModel.addElement(exercise.getName());
@@ -150,7 +155,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         scrollPane.setPreferredSize(new Dimension(250,110));
         panel.add(scrollPane);
         return panel;
-
     }
 
     public JPanel createRemoveExerciseButton() {
