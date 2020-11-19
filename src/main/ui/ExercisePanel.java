@@ -200,6 +200,12 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
+    public void display(ExerciseList exercises) {
+        for (Exercise e: exercises.getExercises()) {
+            listModel.addElement(e.getName());
+        }
+    }
+
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
@@ -214,4 +220,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
             }
         }
     }
+
+
 }

@@ -29,13 +29,13 @@ public class MainFrame extends JFrame {
     JMenuItem goalsItem;
     JsonWriter jsonWriter;
     JsonReader jsonReader;
-    ExerciseList exercises = new ExerciseList();
+    ExerciseList exercises;
     Goals goals = new Goals();
     Goals completedGoals = new Goals();
     JPanel masterPanel;
     JPanel mainPanel;
     ExercisePanel exercisePanel;
-    JPanel goalsPanel;
+    GoalsPanel goalsPanel;
     CardLayout cl = new CardLayout();
 
     public MainFrame() {
@@ -75,7 +75,6 @@ public class MainFrame extends JFrame {
         JLabel label = new JLabel();
         label.setText("Start tracking your workout routine!");
         label.setFont(new Font("Arial", Font.BOLD, 20));
-//        label.setIcon(workoutImage);
 
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -148,6 +147,7 @@ public class MainFrame extends JFrame {
 
     private void loadExerciseTracker() {
         try {
+            exercises = exercisePanel.getExercises();
             exercises = jsonReader.readExercises();
             goals = jsonReader.readGoals();
             completedGoals = jsonReader.readCompletedGoals();
@@ -163,7 +163,6 @@ public class MainFrame extends JFrame {
         saveItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("save");
                 saveExerciseTracker();
             }
         });
@@ -172,7 +171,7 @@ public class MainFrame extends JFrame {
     private void saveExerciseTracker() {
         try {
             jsonWriter.open();
-            jsonWriter.write(exercises, goals, completedGoals);
+            jsonWriter.write(exercisePanel.getExercises(), goals, completedGoals);
             jsonWriter.close();
             System.out.println("Saved " + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
@@ -195,6 +194,7 @@ public class MainFrame extends JFrame {
         exercisesItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                exercisePanel.display(exercises);
                 cl.show(masterPanel, "ePanel");
             }
         });
