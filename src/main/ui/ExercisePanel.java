@@ -30,7 +30,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     public ExercisePanel() {
         this.setLayout(new GridBagLayout());
         this.setBackground(new Color(204,229,255));
-        removeExerciseButton = new JButton("Remove Exercise");
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -113,7 +112,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int hours = Integer.parseInt(hoursText.getText());
-
                 exercise = new Exercise(typeText.getText(), dateText.getText(), hours);
                 exercises.addExercise(exercise);
                 listModel.addElement(exercise.getName());
@@ -160,13 +158,18 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     public JPanel createRemoveExerciseButton() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 204, 204));
-//        removeExerciseButton = new JButton("Remove Exercise");
+        removeExerciseButton = new JButton("Remove Exercise");
         removeExerciseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int index = list.getSelectedIndex();
                 listModel.remove(index);
                 int size = listModel.getSize();
+
+//
+//                int hours = Integer.parseInt(hoursText.getText());
+//                exercise = new Exercise(typeText.getText(), dateText.getText(), hours);
+//                exercises.removeExercise(exercise);
 
                 if (size == 0) {
                     removeExerciseButton.setEnabled(false);
@@ -201,9 +204,11 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     }
 
     public void display(ExerciseList exercises) {
+        listModel.clear();
         for (Exercise e: exercises.getExercises()) {
             listModel.addElement(e.getName());
         }
+        this.exercises = exercises;
     }
 
     @Override

@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
     JMenuItem goalsItem;
     JsonWriter jsonWriter;
     JsonReader jsonReader;
-    ExerciseList exercises;
+
     Goals goals = new Goals();
     Goals completedGoals = new Goals();
     JPanel masterPanel;
@@ -46,7 +46,6 @@ public class MainFrame extends JFrame {
         mainPanel = new JPanel();
         exercisePanel = new ExercisePanel();
         goalsPanel = new GoalsPanel();
-        exercises = exercisePanel.getExercises();
 
         masterPanel.add(mainPanel, "mPanel");
         masterPanel.add(exercisePanel, "ePanel");
@@ -147,8 +146,7 @@ public class MainFrame extends JFrame {
 
     private void loadExerciseTracker() {
         try {
-            exercises = exercisePanel.getExercises();
-            exercises = jsonReader.readExercises();
+            exercisePanel.display(jsonReader.readExercises());
             goals = jsonReader.readGoals();
             completedGoals = jsonReader.readCompletedGoals();
             System.out.println("Loaded from " + JSON_STORE);
@@ -194,7 +192,7 @@ public class MainFrame extends JFrame {
         exercisesItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                exercisePanel.display(exercises);
+                exercisePanel.display(exercisePanel.getExercises());
                 cl.show(masterPanel, "ePanel");
             }
         });
