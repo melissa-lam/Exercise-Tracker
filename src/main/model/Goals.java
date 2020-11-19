@@ -41,6 +41,10 @@ public class Goals implements WritableArray {
         goals.removeIf(goal -> name.equals(goal.getName()));
     }
 
+    public void removeIndex(int index) {
+        goals.remove(index);
+    }
+
     public List<Goal> getGoals() {
         return Collections.unmodifiableList(goals);
     }

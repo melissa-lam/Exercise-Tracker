@@ -164,8 +164,8 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
             public void actionPerformed(ActionEvent e) {
                 int index = list.getSelectedIndex();
                 listModel.remove(index);
+                exercises.removeIndex(index);
                 int size = listModel.getSize();
-
 
                 if (size == 0) {
                     removeExerciseButton.setEnabled(false);
@@ -177,7 +177,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                     list.setSelectedIndex(index);
                     list.ensureIndexIsVisible(index);
                 }
-                exercises.removeIndex(index);
             }
         });
         panel.add(removeExerciseButton);

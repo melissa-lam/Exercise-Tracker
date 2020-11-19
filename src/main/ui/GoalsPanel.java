@@ -1,5 +1,7 @@
 package ui;
 
+import model.Exercise;
+import model.ExerciseList;
 import model.Goal;
 import model.Goals;
 
@@ -24,6 +26,8 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
     private JButton completeGoalButton;
     private JList list;
     private DefaultListModel listModel = new DefaultListModel();
+    private JList completedList;
+    private DefaultListModel completedListModel = new DefaultListModel();
     private Goal goal;
     private Goal completedGoal;
     private Goals goals = new Goals();
@@ -47,7 +51,6 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         gbc.gridy = 2;
         leftPanel();
 
-
         gbc.gridx = 4;
         gbc.gridy = 2;
         middlePanel();
@@ -63,6 +66,14 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         gbc.fill = HORIZONTAL;
         bottomPanel();
 
+    }
+
+    public Goals getGoals() {
+        return goals;
+    }
+
+    public Goals getCompletedGoals() {
+        return completedGoals;
     }
 
     public void topPanel() {
@@ -121,12 +132,18 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
                 goal = new Goal(typeText.getText(), dateText.getText(), hours);
                 goals.addGoals(goal);
                 listModel.addElement(goal.getName());
+
+                typeText.requestFocusInWindow();
+                typeText.setText("");
+                dateText.requestFocusInWindow();
+                dateText.setText("");
+                hoursText.requestFocusInWindow();
+                hoursText.setText("");
                 removeGoalButton.setEnabled(true);
             }
         });
         addGoalButton.setEnabled(true);
         panel.add(addGoalButton);
-        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         return panel;
     }
 
@@ -147,6 +164,8 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
             listModel.addElement(g.getName());
         }
         list = new JList(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
         JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setPreferredSize(new Dimension(200,110));
         panel.add(scrollPane);
@@ -162,6 +181,7 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
             public void actionPerformed(ActionEvent e) {
                 int index = list.getSelectedIndex();
                 listModel.remove(index);
+                goals.removeIndex(index);
                 int size = listModel.getSize();
 
                 if (size == 0) { //Nobody's left, disable firing.
@@ -193,10 +213,12 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
         for (Goal g: completedGoals.getGoals()) {
-            listModel.addElement(g.getName());
+            completedListModel.addElement(g.getName());
         }
-        list = new JList(listModel);
-        JScrollPane scrollPane = new JScrollPane(list);
+        completedList = new JList(completedListModel);
+        completedList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        completedList.setSelectedIndex(0);
+        JScrollPane scrollPane = new JScrollPane(completedList);
         scrollPane.setPreferredSize(new Dimension(200,110));
         panel.add(scrollPane);
         return panel;
@@ -209,11 +231,12 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         completeGoalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int hours = Integer.parseInt(hoursText.getText());
-                completedGoal = new Goal(typeText.getText(), dateText.getText(), hours);
+                int index = list.getSelectedIndex();
+                completedGoal = goals.getGoals().get(index);
                 completedGoals.addGoals(completedGoal);
-                listModel.addElement(completedGoal.getName());
-//                removeGoalButton.setEnabled(true);
+                goals.removeIndex(index);
+                completedListModel.addElement(completedGoal.getName());
+                listModel.remove(index);
             }
         });
         completeGoalButton.setEnabled(true);
@@ -237,6 +260,22 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         JLabel label = new JLabel("Keep up the great work!");
         panel.add(label);
         this.add(panel, gbc);
+    }
+
+    public void displayGoals(Goals goals) {
+        listModel.clear();
+        for (Goal g: goals.getGoals()) {
+            listModel.addElement(g.getName());
+        }
+        this.goals = goals;
+    }
+
+    public void displayCompletedGoals(Goals completedGoals) {
+        completedListModel.clear();
+        for (Goal g: completedGoals.getGoals()) {
+            completedListModel.addElement(g.getName());
+        }
+        this.completedGoals = completedGoals;
     }
 
     @Override

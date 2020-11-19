@@ -147,8 +147,8 @@ public class MainFrame extends JFrame {
     private void loadExerciseTracker() {
         try {
             exercisePanel.display(jsonReader.readExercises());
-            goals = jsonReader.readGoals();
-            completedGoals = jsonReader.readCompletedGoals();
+            goalsPanel.displayGoals(jsonReader.readGoals());
+            goalsPanel.displayCompletedGoals(jsonReader.readCompletedGoals());
             System.out.println("Loaded from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -169,7 +169,7 @@ public class MainFrame extends JFrame {
     private void saveExerciseTracker() {
         try {
             jsonWriter.open();
-            jsonWriter.write(exercisePanel.getExercises(), goals, completedGoals);
+            jsonWriter.write(exercisePanel.getExercises(), goalsPanel.getGoals(), goalsPanel.getCompletedGoals());
             jsonWriter.close();
             System.out.println("Saved " + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
@@ -204,6 +204,8 @@ public class MainFrame extends JFrame {
         goalsItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                goalsPanel.displayGoals(goalsPanel.getGoals());
+                goalsPanel.displayCompletedGoals(goalsPanel.getCompletedGoals());
                 cl.show(masterPanel, "gPanel");
             }
         });

@@ -47,7 +47,6 @@ public class ExerciseList implements WritableArray {
     }
 
     public void removeIndex(int index) {
-        index = 0;
         exercises.remove(index);
     }
 
