@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 // Tests for exercise list class
 public class ExerciseListTest {
@@ -55,6 +54,17 @@ public class ExerciseListTest {
         assertTrue(testExerciseList.contains(exercise3));
         testExerciseList.removeExercise(exercise3);
         assertEquals(0, testExerciseList.length());
+    }
+
+    @Test
+    public void testRemoveExerciseByIndex() {
+        testExerciseList.addExercise(exercise1);
+        testExerciseList.addExercise(exercise2);
+        testExerciseList.addExercise(exercise3);
+        testExerciseList.removeIndex(1);
+        assertFalse(testExerciseList.contains(exercise1));
+        assertTrue(testExerciseList.contains(exercise2));
+        assertTrue(testExerciseList.contains(exercise3));
     }
 
     @Test

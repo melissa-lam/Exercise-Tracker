@@ -166,10 +166,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                 listModel.remove(index);
                 int size = listModel.getSize();
 
-//
-//                int hours = Integer.parseInt(hoursText.getText());
-//                exercise = new Exercise(typeText.getText(), dateText.getText(), hours);
-//                exercises.removeExercise(exercise);
 
                 if (size == 0) {
                     removeExerciseButton.setEnabled(false);
@@ -181,6 +177,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                     list.setSelectedIndex(index);
                     list.ensureIndexIsVisible(index);
                 }
+                exercises.removeIndex(index);
             }
         });
         panel.add(removeExerciseButton);

@@ -46,6 +46,11 @@ public class ExerciseList implements WritableArray {
         exercises.removeIf(exercise -> name.equals(exercise.getName()));
     }
 
+    public void removeIndex(int index) {
+        index = 0;
+        exercises.remove(index);
+    }
+
     // REQUIRES: must have exercises on that date
     // EFFECTS: returns a new exercise list from that particular date
     public ExerciseList exercisesFromDate(String d) {
