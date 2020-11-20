@@ -62,8 +62,8 @@ public class ExerciseListTest {
         testExerciseList.addExercise(exercise2);
         testExerciseList.addExercise(exercise3);
         testExerciseList.removeIndex(1);
-        assertFalse(testExerciseList.contains(exercise1));
-        assertTrue(testExerciseList.contains(exercise2));
+        assertTrue(testExerciseList.contains(exercise1));
+        assertFalse(testExerciseList.contains(exercise2));
         assertTrue(testExerciseList.contains(exercise3));
     }
 

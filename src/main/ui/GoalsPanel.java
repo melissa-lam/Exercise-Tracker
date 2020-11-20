@@ -25,18 +25,17 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
     private JButton removeGoalButton;
     private JButton completeGoalButton;
     private JList list;
-    private DefaultListModel listModel = new DefaultListModel();
+    private DefaultListModel listModel;
     private JList completedList;
-    private DefaultListModel completedListModel = new DefaultListModel();
+    private DefaultListModel completedListModel;
     private Goal goal;
     private Goal completedGoal;
-    private Goals goals = new Goals();
-    private Goals completedGoals = new Goals();
-    private GridBagConstraints gbc = new GridBagConstraints();
+    private Goals goals;
+    private Goals completedGoals;
+    private GridBagConstraints gbc;
 
     public GoalsPanel() {
-        this.setLayout(new GridBagLayout());
-        this.setBackground(new Color(204,229,255));
+        init();
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -66,6 +65,16 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         gbc.fill = HORIZONTAL;
         bottomPanel();
 
+    }
+
+    public void init() {
+        listModel = new DefaultListModel();
+        completedListModel = new DefaultListModel();
+        goals = new Goals();
+        completedGoals = new Goals();
+        gbc = new GridBagConstraints();
+        this.setLayout(new GridBagLayout());
+        this.setBackground(new Color(204,229,255));
     }
 
     public Goals getGoals() {

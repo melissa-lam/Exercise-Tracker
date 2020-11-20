@@ -46,6 +46,9 @@ public class ExerciseList implements WritableArray {
         exercises.removeIf(exercise -> name.equals(exercise.getName()));
     }
 
+    // REQUIRES: list cannot be empty and must have given exercise in that list
+    // MODIFIES: this
+    // EFFECTS: removes an Exercise from the list based on given index
     public void removeIndex(int index) {
         exercises.remove(index);
     }

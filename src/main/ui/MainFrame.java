@@ -19,7 +19,7 @@ public class MainFrame extends JFrame {
     ImageIcon loadImage = new ImageIcon("./data/load.jpg");
     ImageIcon saveImage = new ImageIcon("./data/save.png");
     ImageIcon goalsImage = new ImageIcon("./data/goals.png");
-    JMenuBar menuBar = new JMenuBar();
+    JMenuBar menuBar;
     JMenu fileMenu;
     JMenu trackerMenu;
     JMenuItem mainItem;
@@ -29,7 +29,6 @@ public class MainFrame extends JFrame {
     JMenuItem goalsItem;
     JsonWriter jsonWriter;
     JsonReader jsonReader;
-
     Goals goals = new Goals();
     Goals completedGoals = new Goals();
     JPanel masterPanel;
@@ -37,15 +36,11 @@ public class MainFrame extends JFrame {
     ExercisePanel exercisePanel;
     GoalsPanel goalsPanel;
     CardLayout cl = new CardLayout();
+    JPanel panel1;
+    JPanel panel2;
 
     public MainFrame() {
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
-        masterPanel = new JPanel();
-        masterPanel.setLayout(cl);
-        mainPanel = new JPanel();
-        exercisePanel = new ExercisePanel();
-        goalsPanel = new GoalsPanel();
+        init();
 
         masterPanel.add(mainPanel, "mPanel");
         masterPanel.add(exercisePanel, "ePanel");
@@ -60,7 +55,7 @@ public class MainFrame extends JFrame {
         this.add(masterPanel);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500,400);
+        this.setSize(580,400);
         this.setResizable(true);
         this.setTitle("Exercise Tracker");
 
@@ -69,13 +64,37 @@ public class MainFrame extends JFrame {
 
     }
 
+    public void init() {
+        menuBar = new JMenuBar();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        cl = new CardLayout();
+        masterPanel = new JPanel();
+        masterPanel.setLayout(cl);
+        mainPanel = new JPanel();
+        exercisePanel = new ExercisePanel();
+        goalsPanel = new GoalsPanel();
+    }
+
     public JPanel makeMainPanel() {
         mainPanel.setBackground(new Color(204,229,255));
         JLabel label = new JLabel();
         label.setText("Start tracking your workout routine!");
         label.setFont(new Font("Arial", Font.BOLD, 20));
 
-        JPanel panel1 = new JPanel();
+        makeMainPanelOne();
+
+        makeMainPanelTwo();
+
+        mainPanel.add(label);
+        mainPanel.add(panel1);
+        mainPanel.add(panel2);
+
+        return mainPanel;
+    }
+
+    public void makeMainPanelOne() {
+        panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
         panel1.setBackground(new Color(204,204,255));
         panel1.setPreferredSize(new Dimension(400,75));
@@ -90,8 +109,10 @@ public class MainFrame extends JFrame {
         panel1.add(new Box.Filler(minSize, prefSize, maxSize));
         panel1.add(header1);
         panel1.add(text1);
+    }
 
-        JPanel panel2 = new JPanel();
+    public void makeMainPanelTwo() {
+        panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
         panel2.setBackground(new Color(204,204,255));
         panel2.setPreferredSize(new Dimension(400,100));
@@ -99,16 +120,15 @@ public class MainFrame extends JFrame {
         header2.setIcon(goalsImage);
         JLabel text2 = new JLabel("Set your fitness goal for today!");
         JLabel text21 = new JLabel("Keep track of completed goals!");
+
+        Dimension minSize = new Dimension(18,18);
+        Dimension prefSize = new Dimension(18,18);
+        Dimension maxSize = new Dimension(Short.MAX_VALUE, 18);
+
         panel2.add(new Box.Filler(minSize, prefSize, maxSize));
         panel2.add(header2);
         panel2.add(text2);
         panel2.add(text21);
-
-        mainPanel.add(label);
-        mainPanel.add(panel1);
-        mainPanel.add(panel2);
-
-        return mainPanel;
     }
 
     public void fileMenu() {

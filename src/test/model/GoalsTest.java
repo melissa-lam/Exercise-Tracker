@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 // Tests for goals class
 public class GoalsTest {
@@ -50,6 +49,17 @@ public class GoalsTest {
         assertTrue(testGoals.contains(goals3));
         testGoals.removeGoals(goals3);
         assertEquals(0, testGoals.length());
+    }
+
+    @Test
+    public void testRemoveGoalsByIndex() {
+        testGoals.addGoals(goals1);
+        testGoals.addGoals(goals2);
+        testGoals.addGoals(goals3);
+        testGoals.removeIndex(2);
+        assertTrue(testGoals.contains(goals1));
+        assertTrue(testGoals.contains(goals2));
+        assertFalse(testGoals.contains(goals3));
     }
 
     @Test

@@ -41,6 +41,9 @@ public class Goals implements WritableArray {
         goals.removeIf(goal -> name.equals(goal.getName()));
     }
 
+    // REQUIRES: list not be empty and must have given goal in the list already
+    // MODIFIES: this
+    // EFFECTS: removes a goal from the current list based on given index
     public void removeIndex(int index) {
         goals.remove(index);
     }

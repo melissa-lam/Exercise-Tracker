@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 
 import static java.awt.GridBagConstraints.*;
 
+// Represents an exercise panel where user can add and remove exercises and view past exercises
 public class ExercisePanel extends JPanel implements ListSelectionListener {
     private JLabel type;
     private JLabel date;
@@ -22,12 +23,14 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     private JButton addExerciseButton;
     private JButton removeExerciseButton;
     private JList list;
-    private DefaultListModel listModel = new DefaultListModel();
+    private DefaultListModel listModel;
     private Exercise exercise;
-    public ExerciseList exercises = new ExerciseList();
-    private GridBagConstraints gbc = new GridBagConstraints();
+    public ExerciseList exercises;
+    private GridBagConstraints gbc;
 
     public ExercisePanel() {
+        init();
+
         this.setLayout(new GridBagLayout());
         this.setBackground(new Color(204,229,255));
 
@@ -54,6 +57,12 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         gbc.gridwidth = 10;
         gbc.fill = HORIZONTAL;
         bottomPanel();
+    }
+
+    public void init() {
+        listModel = new DefaultListModel();
+        exercises = new ExerciseList();
+        gbc = new GridBagConstraints();
     }
 
     public ExerciseList getExercises() {
