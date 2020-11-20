@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 
 import static java.awt.GridBagConstraints.HORIZONTAL;
 
+// Represents an goal panel where user can add and remove goals and view past goals
 public class GoalsPanel extends JPanel implements ListSelectionListener {
     private JLabel type;
     private JLabel date;
@@ -34,6 +35,7 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
     private Goals completedGoals;
     private GridBagConstraints gbc;
 
+    //EFFECTS: constructs the goals panel
     public GoalsPanel() {
         init();
 
@@ -67,6 +69,7 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
 
     }
 
+    // EFFECTS: initializes necessary fields
     public void init() {
         listModel = new DefaultListModel();
         completedListModel = new DefaultListModel();
@@ -77,14 +80,18 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         this.setBackground(new Color(204,229,255));
     }
 
+    // EFFECTS: returns the list of goals
     public Goals getGoals() {
         return goals;
     }
 
+    // EFFECTS: returns the list of completed goals
     public Goals getCompletedGoals() {
         return completedGoals;
     }
 
+    // MODIFIES: this
+    // EFFECTS: makes a panel with text "Track your exercises here!" and adds it to this panel
     public void topPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(204,255,229));
@@ -93,6 +100,7 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
+    // EFFECTS: returns a panel that shows the type and the corresponding text field
     public JPanel createTypePane() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -105,6 +113,7 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // EFFECTS: returns a panel that shows the date and the corresponding text field
     public JPanel createDatePane() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -118,6 +127,7 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
 
     }
 
+    // EFFECTS: returns a panel that shows the hours and the corresponding text field
     public JPanel createHoursPane() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -130,6 +140,9 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: goal, goals, listModel
+    // EFFECTS: returns a panel that has an add goal button that adds goals to the goals
+    //          as well as the listModel
     public JPanel createAddGoalButton() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -156,9 +169,14 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the left panel which shows the text fields to enter a new goal and adds it to this
     public void leftPanel() {
         JPanel panel = new JPanel();
+        JLabel label = new JLabel(" ");
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setBackground(new Color(255, 204, 204));
+        panel.add(label);
         panel.add(createTypePane());
         panel.add(createDatePane());
         panel.add(createHoursPane());
@@ -166,6 +184,8 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
+    // MODIFIES: list, goals
+    // EFFECTS: returns a jpanel that shows the goals list in a scroll pane
     public JPanel createGoalsList() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -181,6 +201,9 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: listModel, goals, list
+    // EFFECTS: returns a panel that has a remove goal button that removes goals from the goals
+    //          as well as the listModel
     public JPanel createRemoveGoalButton() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -191,16 +214,15 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
                 int index = list.getSelectedIndex();
                 listModel.remove(index);
                 goals.removeIndex(index);
+
                 int size = listModel.getSize();
 
-                if (size == 0) { //Nobody's left, disable firing.
+                if (size == 0) {
                     removeGoalButton.setEnabled(false);
-                } else { //Select an index.
+                } else {
                     if (index == listModel.getSize()) {
-                        //removed item in last position
                         index--;
                     }
-
                     list.setSelectedIndex(index);
                     list.ensureIndexIsVisible(index);
                 }
@@ -210,14 +232,23 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates panel showing the goals list in a scroll pane and adds it to this
     public void middlePanel() {
         JPanel panel = new JPanel();
+        JLabel label = new JLabel("Goals ToDo");
+        label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        label.setAlignmentY(JLabel.CENTER_ALIGNMENT);
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setBackground(new Color(255, 204, 204));
+        panel.add(label);
         panel.add(createGoalsList());
         panel.add(createRemoveGoalButton());
         this.add(panel, gbc);
     }
 
+    // MODIFIES: list, completedGoals
+    // EFFECTS: returns a jpanel that shows the completed goals list in a scroll pane
     public JPanel createCompletedGoalsList() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -233,6 +264,9 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: completedGoal, completedGoals, listModel, completedListModel
+    // EFFECTS: returns a panel that has an add completed goal button that adds goals to the completed goals
+    //          as well as remove from the listModel
     public JPanel createAddCompletedGoalButton() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -254,15 +288,23 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a panel that shows the completed goals on a scrollpane and adds it to this
     public void rightPanel() {
         JPanel panel = new JPanel();
+        JLabel label = new JLabel("Completed Goals");
+        label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        label.setAlignmentY(JLabel.CENTER_ALIGNMENT);
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setBackground(new Color(255, 204, 204));
+        panel.add(label);
         panel.add(createCompletedGoalsList());
         panel.add(createAddCompletedGoalButton());
         this.add(panel, gbc);
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: creates a panel that shows text "Keep up the great work!" and adds to this
     public void bottomPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(204,255,229));
@@ -271,6 +313,8 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
+    // MODIFIES: listModel
+    // EFFECTS: clears old listModel and inserts updated goals list
     public void displayGoals(Goals goals) {
         listModel.clear();
         for (Goal g: goals.getGoals()) {
@@ -279,6 +323,8 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         this.goals = goals;
     }
 
+    // MODIFIES: completedListModel
+    // EFFECTS: clears old completedListModel and inserts updated completed goals list
     public void displayCompletedGoals(Goals completedGoals) {
         completedListModel.clear();
         for (Goal g: completedGoals.getGoals()) {
@@ -287,16 +333,16 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         this.completedGoals = completedGoals;
     }
 
+    // MODIFIES: removeGoalButton
+    // EFFECTS: sets the remove goal button to enable/disable based on if a goal is selected
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
             if (list.getSelectedIndex() == -1) {
-                //No selection, disable remove button.
                 removeGoalButton.setEnabled(false);
 
             } else {
-                //Selection, enable the remove button.
                 removeGoalButton.setEnabled(true);
             }
         }

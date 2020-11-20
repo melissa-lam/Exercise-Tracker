@@ -27,12 +27,13 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     private Exercise exercise;
     public ExerciseList exercises;
     private GridBagConstraints gbc;
+    private JComboBox<String> chooseFilter;
+    private JButton viewByTypeButton;
+    private JTextField filter;
 
+    //EFFECTS: constructs the exercise panel
     public ExercisePanel() {
         init();
-
-        this.setLayout(new GridBagLayout());
-        this.setBackground(new Color(204,229,255));
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -57,18 +58,28 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         gbc.gridwidth = 10;
         gbc.fill = HORIZONTAL;
         bottomPanel();
+
+        gbc.gridx = 0;
+        gbc.gridy = 11;
+        viewBy();
     }
 
+    // EFFECTS: initializes necessary fields
     public void init() {
         listModel = new DefaultListModel();
         exercises = new ExerciseList();
         gbc = new GridBagConstraints();
+        this.setLayout(new GridBagLayout());
+        this.setBackground(new Color(204,229,255));
     }
 
+    // EFFECTS: returns the list of exercises
     public ExerciseList getExercises() {
         return exercises;
     }
 
+    // MODIFIES: this
+    // EFFECTS: makes a panel with text "Track your exercises here!" and adds it to this panel
     public void topPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(204,255,229));
@@ -77,6 +88,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
+    // EFFECTS: returns a panel that shows the type and the corresponding text field
     public JPanel createTypePane() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -89,6 +101,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // EFFECTS: returns a panel that shows the date and the corresponding text field
     public JPanel createDatePane() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBackground(new Color(255, 204, 204));
@@ -101,6 +114,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // EFFECTS: returns a panel that shows the hours and the corresponding text field
     public JPanel createHoursPane() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 204, 204));
@@ -113,6 +127,9 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: exercise, exercises, listModel
+    // EFFECTS: returns a panel that has an add exercise button that adds exercises to the exercises
+    //          as well as the listModel
     public JPanel createAddExerciseButton() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 204, 204));
@@ -139,6 +156,8 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the left panel which shows the text fields to enter a new exercise and adds it to this
     public void leftPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -149,6 +168,8 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
+    // MODIFIES: list, exercises
+    // EFFECTS: returns a jpanel that shows the exercise list in a scroll pane
     public JPanel createList() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 204, 204));
@@ -164,6 +185,9 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: listModel, exercises, list
+    // EFFECTS: returns a panel that has a remove exercise button that removes exercises from the exercises
+    //          as well as the listModel
     public JPanel createRemoveExerciseButton() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 204, 204));
@@ -182,7 +206,6 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                     if (index == listModel.getSize()) {
                         index--;
                     }
-
                     list.setSelectedIndex(index);
                     list.ensureIndexIsVisible(index);
                 }
@@ -192,6 +215,8 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the panel showing the list scroll pane and the remove exercise button and adds it to this
     public void rightPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -200,6 +225,63 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
+    // MODIFIES: this
+    // EFFECTS: make a panel that displays options to view by all exercises or by type or date
+    public void viewBy() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(255, 204, 204));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+        makeComboBox();
+        filter = new JTextField();
+
+        panel.add(chooseFilter);
+        panel.add(filter);
+        makeViewByButton();
+
+        panel.add(viewByTypeButton);
+        this.add(panel, gbc);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: make a combo box to choose between "All", "Type", or "Date"
+    public void makeComboBox() {
+        chooseFilter = new JComboBox<>();
+        chooseFilter.addItem("Filter by:");
+        chooseFilter.addItem("All");
+        chooseFilter.addItem("Type");
+        chooseFilter.addItem("Date");
+    }
+
+    // MODIFIES: this, listModel
+    // EFFECTS: make a button that updates list to show either all exercises or by date or type
+    public void makeViewByButton() {
+        viewByTypeButton = new JButton("View by...");
+        viewByTypeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listModel.clear();
+                if (chooseFilter.getSelectedItem().toString().equals("All")) {
+                    for (Exercise er: exercises.getExercises()) {
+                        listModel.addElement(er.getName());
+                    }
+                }
+                if (chooseFilter.getSelectedItem().toString().equals("Type")) {
+                    for (Exercise er: exercises.exercisesFromType(filter.getText()).getExercises()) {
+                        listModel.addElement(er.getName());
+                    }
+                }
+                if (chooseFilter.getSelectedItem().toString().equals("Date")) {
+                    for (Exercise er: exercises.exercisesFromDate(filter.getText()).getExercises()) {
+                        listModel.addElement(er.getName());
+                    }
+                }
+            }
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates panel showing text "Keep up the great work!" and adds it to this
     public void bottomPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(204,255,229));
@@ -208,6 +290,8 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         this.add(panel, gbc);
     }
 
+    // MODIFIES: listModel
+    // EFFECTS: clears old listModel and inserts updated exercise list
     public void display(ExerciseList exercises) {
         listModel.clear();
         for (Exercise e: exercises.getExercises()) {
@@ -216,20 +300,17 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         this.exercises = exercises;
     }
 
+    // MODIFIES: removeExerciseButton
+    // EFFECTS: sets the remove exercise button to enable/disable based on if an exercise is selected
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
-
             if (list.getSelectedIndex() == -1) {
-                //No selection, disable remove button.
                 removeExerciseButton.setEnabled(false);
-
             } else {
-                //Selection, enable the remove button.
                 removeExerciseButton.setEnabled(true);
             }
         }
     }
-
 
 }

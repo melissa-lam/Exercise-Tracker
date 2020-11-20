@@ -1,53 +1,5 @@
 {
-    "exercises": [
-        {
-            "date": "1",
-            "hours": 1,
-            "type": "1"
-        },
-        {
-            "date": "6",
-            "hours": 6,
-            "type": "6"
-        },
-        {
-            "date": "7",
-            "hours": 7,
-            "type": "7"
-        },
-        {
-            "date": "8",
-            "hours": 8,
-            "type": "8"
-        }
-    ],
-    "completed goals": [
-        {
-            "date": "2",
-            "hours": 2,
-            "type": "2"
-        },
-        {
-            "date": "4",
-            "hours": 4,
-            "type": "4"
-        }
-    ],
-    "goals": [
-        {
-            "date": "1",
-            "hours": 1,
-            "type": "1"
-        },
-        {
-            "date": "3",
-            "hours": 3,
-            "type": "3"
-        },
-        {
-            "date": "5",
-            "hours": 5,
-            "type": "5"
-        }
-    ]
+    "exercises": [],
+    "completed goals": [],
+    "goals": []
 }

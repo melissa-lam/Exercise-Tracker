@@ -1,6 +1,5 @@
 package ui;
 
-import model.ExerciseList;
 import model.Goals;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -13,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// Represents the main frame of the application
 public class MainFrame extends JFrame {
     private static final String JSON_STORE = "./data/exercisetracker.json";
     ImageIcon workoutImage = new ImageIcon("./data/workout.png");
@@ -29,8 +29,6 @@ public class MainFrame extends JFrame {
     JMenuItem goalsItem;
     JsonWriter jsonWriter;
     JsonReader jsonReader;
-    Goals goals = new Goals();
-    Goals completedGoals = new Goals();
     JPanel masterPanel;
     JPanel mainPanel;
     ExercisePanel exercisePanel;
@@ -39,6 +37,7 @@ public class MainFrame extends JFrame {
     JPanel panel1;
     JPanel panel2;
 
+    // EFFECTS: constructs the main frame of the application
     public MainFrame() {
         init();
 
@@ -64,6 +63,7 @@ public class MainFrame extends JFrame {
 
     }
 
+    // EFFECTS: initializes necessary fields
     public void init() {
         menuBar = new JMenuBar();
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -76,6 +76,8 @@ public class MainFrame extends JFrame {
         goalsPanel = new GoalsPanel();
     }
 
+    // MODIFIES: mainPanel
+    // EFFECTS: returns the main panel which describes the application
     public JPanel makeMainPanel() {
         mainPanel.setBackground(new Color(204,229,255));
         JLabel label = new JLabel();
@@ -93,14 +95,17 @@ public class MainFrame extends JFrame {
         return mainPanel;
     }
 
+    // MODIFIES: panel1
+    // EFFECTS: returns a panel describing the exercise tracker
     public void makeMainPanelOne() {
         panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
         panel1.setBackground(new Color(204,204,255));
-        panel1.setPreferredSize(new Dimension(400,75));
+        panel1.setPreferredSize(new Dimension(400,90));
         JLabel header1 = new JLabel("Track your exercises:");
         header1.setIcon(workoutImage);
         JLabel text1 = new JLabel("Record your exercises by the type, date, and number of hours!");
+        JLabel text2 = new JLabel("View all exercises or by type or date!");
 
         Dimension minSize = new Dimension(18,18);
         Dimension prefSize = new Dimension(18,18);
@@ -109,8 +114,11 @@ public class MainFrame extends JFrame {
         panel1.add(new Box.Filler(minSize, prefSize, maxSize));
         panel1.add(header1);
         panel1.add(text1);
+        panel1.add(text2);
     }
 
+    // MODIFIES: panel2
+    // EFFECTS: returns a panel describing the goals tracker
     public void makeMainPanelTwo() {
         panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
@@ -131,6 +139,8 @@ public class MainFrame extends JFrame {
         panel2.add(text21);
     }
 
+    // MODIFIES: fileMenu
+    // EFFECTS: adds the file menu to the menu bar
     public void fileMenu() {
         mainItem();
         loadItem();
@@ -142,6 +152,8 @@ public class MainFrame extends JFrame {
         menuBar.add(fileMenu);
     }
 
+    // MODIFIES: mainItem
+    // EFFECTS: makes the Main menu item that shows the main panel
     public void mainItem() {
         mainItem = new JMenuItem("Main");
         mainItem.setIcon(workoutImage);
@@ -153,6 +165,8 @@ public class MainFrame extends JFrame {
         });
     }
 
+    // MODIFIES: loadItem
+    // EFFECTS: makes the Load menu item that calls a method to load the previous files saved
     public void loadItem() {
         loadItem = new JMenuItem("Load");
         loadItem.setIcon(loadImage);
@@ -164,6 +178,8 @@ public class MainFrame extends JFrame {
         });
     }
 
+    // MODIFIES: exercisePanel, goalsPanel
+    // EFFECTS: loads exercise tracker from file
     private void loadExerciseTracker() {
         try {
             exercisePanel.display(jsonReader.readExercises());
@@ -175,6 +191,8 @@ public class MainFrame extends JFrame {
         }
     }
 
+    // MODIFIES: saveItem
+    // EFFECTS: makes the Save menu item which calls a method to save to the file
     public void saveItem() {
         saveItem = new JMenuItem("Save");
         saveItem.setIcon(saveImage);
@@ -186,6 +204,8 @@ public class MainFrame extends JFrame {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves exercise tracker to the file
     private void saveExerciseTracker() {
         try {
             jsonWriter.open();
@@ -197,6 +217,8 @@ public class MainFrame extends JFrame {
         }
     }
 
+    // MODIFIES: trackerMenu, menuBar
+    // EFFECTS: makes the tracker menu and adds to menuBar
     public void trackerMenu() {
         exercisesItem();
         goalsItem();
@@ -206,6 +228,8 @@ public class MainFrame extends JFrame {
         menuBar.add(trackerMenu);
     }
 
+    // MODIFIES: this, exercisesItem
+    // EFFECTS: makes the exerciseItem menu item which shows the exercise panel when clicked
     public void exercisesItem() {
         exercisesItem = new JMenuItem("Exercises");
         exercisesItem.setIcon(workoutImage);
@@ -218,6 +242,8 @@ public class MainFrame extends JFrame {
         });
     }
 
+    // MODIFIES: this, goalsItem
+    // EFFECTS: makes the goalsItem menu item which shows the goals panel when clicked
     public void goalsItem() {
         goalsItem = new JMenuItem("Goals");
         goalsItem.setIcon(goalsImage);
