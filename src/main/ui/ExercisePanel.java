@@ -3,12 +3,16 @@ package ui;
 import model.Exercise;
 import model.ExerciseList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioSystem;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import static java.awt.GridBagConstraints.*;
 
@@ -149,6 +153,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                 hoursText.requestFocusInWindow();
                 hoursText.setText("");
                 removeExerciseButton.setEnabled(true);
+                playButtonSound("./data/button-3.wav");
             }
         });
         addExerciseButton.setEnabled(true);
@@ -298,6 +303,19 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
             listModel.addElement(e.getName());
         }
         this.exercises = exercises;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: takes an audio file and plays the audio
+    public void playButtonSound(String sound) {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sound).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println("Error with playing button sound");
+        }
     }
 
     // MODIFIES: removeExerciseButton
