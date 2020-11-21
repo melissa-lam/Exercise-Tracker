@@ -1,25 +1,5 @@
 {
-    "exercises": [
-        {
-            "date": "oct 12",
-            "hours": 2,
-            "type": "swimming"
-        },
-        {
-            "date": "oct 15",
-            "hours": 3,
-            "type": "swimming"
-        },
-        {
-            "date": "oct 10",
-            "hours": 2,
-            "type": "running"
-        }
-    ],
-    "completed goals": [{
-        "date": "2",
-        "hours": 2,
-        "type": "2"
-    }],
+    "exercises": [],
+    "completed goals": [],
     "goals": []
 }

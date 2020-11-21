@@ -32,7 +32,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     public ExerciseList exercises;
     private GridBagConstraints gbc;
     private JComboBox<String> chooseFilter;
-    private JButton viewByTypeButton;
+    private JButton viewByButton;
     private JTextField filter;
 
     //EFFECTS: constructs the exercise panel
@@ -244,7 +244,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         panel.add(filter);
         makeViewByButton();
 
-        panel.add(viewByTypeButton);
+        panel.add(viewByButton);
         this.add(panel, gbc);
     }
 
@@ -261,8 +261,8 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     // MODIFIES: this, listModel
     // EFFECTS: make a button that updates list to show either all exercises or by date or type
     public void makeViewByButton() {
-        viewByTypeButton = new JButton("View by...");
-        viewByTypeButton.addActionListener(new ActionListener() {
+        viewByButton = new JButton("View by...");
+        viewByButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listModel.clear();
@@ -281,8 +281,16 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                         listModel.addElement(er.getName());
                     }
                 }
+                resetFilterTextField();
             }
         });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: resets the filter text field
+    public void resetFilterTextField() {
+        filter.requestFocusInWindow();
+        filter.setText("");
     }
 
     // MODIFIES: this

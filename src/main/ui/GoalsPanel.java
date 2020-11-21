@@ -34,17 +34,15 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
     private Goals goals;
     private Goals completedGoals;
     private GridBagConstraints gbc;
+    private JTextField filter;
+    private JComboBox<String> chooseFilter;
+    private JButton viewByButton;
 
     //EFFECTS: constructs the goals panel
     public GoalsPanel() {
         init();
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridheight = 2;
-        gbc.gridwidth = 10;
-        gbc.fill = HORIZONTAL;
-        topPanel();
+        initTopPanel();
 
         gbc = new GridBagConstraints();
 
@@ -67,6 +65,9 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         gbc.fill = HORIZONTAL;
         bottomPanel();
 
+        gbc.gridx = 0;
+        gbc.gridy = 11;
+        viewBy();
     }
 
     // EFFECTS: initializes necessary fields
@@ -78,6 +79,16 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         gbc = new GridBagConstraints();
         this.setLayout(new GridBagLayout());
         this.setBackground(new Color(204,229,255));
+    }
+
+    //EFFECTS: initializes top panel
+    public void initTopPanel() {
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        gbc.gridwidth = 10;
+        gbc.fill = HORIZONTAL;
+        topPanel();
     }
 
     // EFFECTS: returns the list of goals
@@ -311,6 +322,69 @@ public class GoalsPanel extends JPanel implements ListSelectionListener {
         JLabel label = new JLabel("Keep up the great work!");
         panel.add(label);
         this.add(panel, gbc);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: make a panel that displays options to view by all completed goals or by type or date
+    public void viewBy() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(255, 204, 204));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+        makeComboBox();
+        filter = new JTextField();
+
+        panel.add(chooseFilter);
+        panel.add(filter);
+        makeViewByButton();
+
+        panel.add(viewByButton);
+        this.add(panel, gbc);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: make a combo box to choose between "All", "Type", or "Date"
+    public void makeComboBox() {
+        chooseFilter = new JComboBox<>();
+        chooseFilter.addItem("Filter Completed Goals by:");
+        chooseFilter.addItem("All");
+        chooseFilter.addItem("Type");
+        chooseFilter.addItem("Date");
+    }
+
+    // MODIFIES: this, listModel
+    // EFFECTS: make a button that updates list to show either all completed goals or by date or type
+    public void makeViewByButton() {
+        viewByButton = new JButton("View by...");
+        viewByButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                completedListModel.clear();
+                if (chooseFilter.getSelectedItem().toString().equals("All")) {
+                    for (Goal g: completedGoals.getGoals()) {
+                        completedListModel.addElement(g.getName());
+                    }
+                }
+                if (chooseFilter.getSelectedItem().toString().equals("Type")) {
+                    for (Goal g: completedGoals.goalsByType(filter.getText()).getGoals()) {
+                        completedListModel.addElement(g.getName());
+                    }
+                }
+                if (chooseFilter.getSelectedItem().toString().equals("Date")) {
+                    for (Goal g: completedGoals.goalsByDate(filter.getText()).getGoals()) {
+                        completedListModel.addElement(g.getName());
+                    }
+                    resetFilterTextField();
+                }
+            }
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: resets the filter text field
+    public void resetFilterTextField() {
+        filter.requestFocusInWindow();
+        filter.setText("");
     }
 
     // MODIFIES: listModel
