@@ -42,6 +42,10 @@ file and have the option to do so or not.
 file and have the option to do so or not.
 - As a user, when I start the application, I want to be given the option to load my to-do list from file.
 
+## **Phase 4: Task 2** ##
+I did the first option of making a class in my model package robust. I made my ExerciseList class robust and the 
+methods that I changed were the removeExercise, removeIndex, exercisesFromDate, and exercisesFromType methods.
+
 
 
  

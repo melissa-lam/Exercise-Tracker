@@ -1,8 +1,8 @@
 package model;
 
+import exceptions.EmptyException;
+import exceptions.NotInListException;
 import org.json.JSONArray;
-import org.json.JSONObject;
-import persistence.Writable;
 import persistence.WritableArray;
 
 import java.util.ArrayList;
@@ -34,47 +34,71 @@ public class ExerciseList implements WritableArray {
         exercises.add(e);
     }
 
+    // EFFECTS: returns the list of exercises
     public List<Exercise> getExercises() {
         return Collections.unmodifiableList(exercises);
     }
 
-    // REQUIRES: list cannot be empty and must have given exercise in that list
     // MODIFIES: this
-    // EFFECTS: removes an Exercise from the list
-    public void removeExercise(Exercise e) {
-        String name = e.getName();
-        exercises.removeIf(exercise -> name.equals(exercise.getName()));
+    // EFFECTS: if exercise list is empty, throw new EmptyException,
+    //          if exercise is not in the list, throw new NotInListException,
+    //          otherwise removes an Exercise from the list
+    public void removeExercise(Exercise e) throws EmptyException, NotInListException {
+        if (exercises.isEmpty()) {
+            throw new EmptyException("There are no exercises in your list.");
+        } else if (!exercises.contains(e)) {
+            throw new NotInListException("This exercise is not in your list.");
+        } else {
+            String name = e.getName();
+            exercises.removeIf(exercise -> name.equals(exercise.getName()));
+        }
     }
 
-    // REQUIRES: list cannot be empty and must have given exercise in that list
     // MODIFIES: this
-    // EFFECTS: removes an Exercise from the list based on given index
-    public void removeIndex(int index) {
-        exercises.remove(index);
+    // EFFECTS: if exercise list is empty, throw new EmptyException,
+    //          if exercise is not in the list, throw new NotInListException,
+    //          otherwise removes an Exercise from the list based on given index
+    public void removeIndex(int index) throws EmptyException, NotInListException {
+        if (exercises.isEmpty()) {
+            throw new EmptyException("There are no exercises in your list.");
+        } else if (exercises.size() < index) {
+            throw new NotInListException("This exercise is not in your list.");
+        } else {
+            exercises.remove(index);
+        }
     }
 
-    // REQUIRES: must have exercises on that date
-    // EFFECTS: returns a new exercise list from that particular date
-    public ExerciseList exercisesFromDate(String d) {
-        ExerciseList exercisesFromDate = new ExerciseList();
-        for (Exercise e: exercises) {
-            if (d.equals(e.getDate())) {
-                exercisesFromDate.addExercise(e);
+
+    // EFFECTS: if exercise list is empty, throw new EmptyException,
+    //          otherwise returns a new exercise list from that particular date
+    public ExerciseList exercisesFromDate(String d) throws EmptyException {
+        if (exercises.isEmpty()) {
+            throw new EmptyException("There are no exercises in your list.");
+        } else {
+            ExerciseList exercisesFromDate = new ExerciseList();
+            for (Exercise e: exercises) {
+                if (d.equals(e.getDate())) {
+                    exercisesFromDate.addExercise(e);
+                }
             }
+            return exercisesFromDate;
         }
-        return exercisesFromDate;
     }
 
-    // REQUIRES: must have exercises from that type
-    // EFFECTS: returns a new exercise list from that particular type
-    public ExerciseList exercisesFromType(String type) {
-        ExerciseList exercisesFromType = new ExerciseList();
-        for (Exercise e: exercises) {
-            if (type.equals(e.getType())) {
-                exercisesFromType.addExercise(e);
+    // EFFECTS: if exercise list is empty, throw new EmptyException,
+    //          otherwise returns a new exercise list from that particular type
+    public ExerciseList exercisesFromType(String type) throws EmptyException {
+        if (exercises.isEmpty()) {
+            throw new EmptyException("There are no exercises in your list.");
+        } else {
+            ExerciseList exercisesFromType = new ExerciseList();
+            for (Exercise e: exercises) {
+                if (type.equals(e.getType())) {
+                    exercisesFromType.addExercise(e);
+                }
             }
+            return exercisesFromType;
         }
-        return exercisesFromType;
     }
 
     // EFFECTS: returns total hours exercised

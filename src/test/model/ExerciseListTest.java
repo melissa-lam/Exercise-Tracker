@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.EmptyException;
+import exceptions.NotInListException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,20 +42,90 @@ public class ExerciseListTest {
     }
 
     @Test
-    public void testRemoveExercise() {
+    public void testRemoveExerciseEmptyException() {
+        try {
+            testExerciseList.removeExercise(exercise1);
+            fail("The exercise list is empty.");
+        } catch (EmptyException e) {
+            //expected
+        } catch (NotInListException e) {
+            fail("EmptyException should have been thrown.");
+        }
+    }
+
+    @Test
+    public void testRemoveExerciseNotInListException() {
+        testExerciseList.addExercise(exercise1);
+        testExerciseList.addExercise(exercise2);
+        try {
+            testExerciseList.removeExercise(exercise3);
+            fail("This exercise was not in the list.");
+        } catch (EmptyException e) {
+            fail("NotInListException should have been thrown.");
+        } catch (NotInListException e) {
+            //expected
+        }
+    }
+
+    @Test
+    public void testRemove() {
         testExerciseList.addExercise(exercise1);
         testExerciseList.addExercise(exercise2);
         testExerciseList.addExercise(exercise3);
         assertEquals(3, testExerciseList.length());
-        testExerciseList.removeExercise(exercise1);
+        try {
+            testExerciseList.removeExercise(exercise1);
+        } catch (EmptyException e) {
+            fail("NotInListException should have been thrown.");
+        } catch (NotInListException e) {
+            fail("EmptyException should have been thrown.");
+        }
         assertEquals(2, testExerciseList.length());
         assertTrue(testExerciseList.contains(exercise2));
         assertTrue(testExerciseList.contains(exercise3));
-        testExerciseList.removeExercise(exercise2);
+        try {
+            testExerciseList.removeExercise(exercise2);
+        } catch (EmptyException e) {
+            fail("EmptyException should have been thrown.");
+        } catch (NotInListException e) {
+            fail("NotInListException should have been thrown.");
+        }
         assertEquals(1, testExerciseList.length());
         assertTrue(testExerciseList.contains(exercise3));
-        testExerciseList.removeExercise(exercise3);
+        try {
+            testExerciseList.removeExercise(exercise3);
+        } catch (EmptyException e) {
+            fail("EmptyException should have been thrown.");
+        } catch (NotInListException e) {
+            fail("NotInListException should have been thrown.");
+        }
         assertEquals(0, testExerciseList.length());
+    }
+
+    @Test
+    public void testRemoveExerciseByIndexEmptyException() {
+        try {
+            testExerciseList.removeIndex(1);
+            fail("EmptyException should have been thrown.");
+        } catch (EmptyException e) {
+            //expected
+        } catch (NotInListException e) {
+            fail("NotInListException should not have been thrown.");
+        }
+    }
+
+    @Test
+    public void testRemoveExerciseByIndexNotInList() {
+        testExerciseList.addExercise(exercise1);
+        testExerciseList.addExercise(exercise2);
+        try {
+            testExerciseList.removeIndex(4);
+            fail("NotInListException should have been thrown");
+        } catch (EmptyException e) {
+            fail("EmptyException should have been thrown.");
+        } catch (NotInListException e) {
+            //expected
+        }
     }
 
     @Test
@@ -61,39 +133,87 @@ public class ExerciseListTest {
         testExerciseList.addExercise(exercise1);
         testExerciseList.addExercise(exercise2);
         testExerciseList.addExercise(exercise3);
-        testExerciseList.removeIndex(1);
+        try {
+            testExerciseList.removeIndex(1);
+        } catch (EmptyException e) {
+            fail("EmptyException should not have been thrown.");
+        } catch (NotInListException e) {
+            fail("NotInListException should not have been thrown.");
+        }
         assertTrue(testExerciseList.contains(exercise1));
         assertFalse(testExerciseList.contains(exercise2));
         assertTrue(testExerciseList.contains(exercise3));
     }
 
     @Test
+    public void testExercisesFromDateEmptyException() {
+        ExerciseList newList = null;
+        try {
+            newList = testExerciseList.exercisesFromDate("October 12");
+            fail("EmptyException should have been thrown.");
+        } catch (EmptyException e) {
+            //expected
+        }
+    }
+
+    @Test
     public void testExercisesFromDate() {
+        ExerciseList newList = null;
         testExerciseList.addExercise(exercise1);
         testExerciseList.addExercise(exercise2);
         testExerciseList.addExercise(exercise3);
         testExerciseList.addExercise(exercise4);
         testExerciseList.addExercise(exercise5);
-        ExerciseList newList = testExerciseList.exercisesFromDate("October 12");
+        try {
+            newList = testExerciseList.exercisesFromDate("October 12");
+        } catch (EmptyException e) {
+            fail("EmptyException should not have been thrown.");
+        }
         assertEquals(2, newList.length());
         assertTrue(newList.contains(exercise1));
         assertTrue(newList.contains(exercise5));
-        ExerciseList noExercisesFromDate = testExerciseList.exercisesFromDate("May 1");
+        ExerciseList noExercisesFromDate = null;
+        try {
+            noExercisesFromDate = testExerciseList.exercisesFromDate("May 1");
+        } catch (EmptyException e) {
+            fail("EmptyException should not have been thrown.");
+        }
         assertEquals(0, noExercisesFromDate.length());
     }
 
     @Test
+    public void testExercisesFromTypeEmptyException() {
+        ExerciseList newList = null;
+        try {
+            newList = testExerciseList.exercisesFromType("Cardio");
+            fail("EmptyException should have been thrown");
+        } catch (EmptyException e) {
+            //expected
+        }
+    }
+
+    @Test
     public void testExercisesFromType() {
+        ExerciseList newList = null;
         testExerciseList.addExercise(exercise1);
         testExerciseList.addExercise(exercise2);
         testExerciseList.addExercise(exercise3);
         testExerciseList.addExercise(exercise4);
         testExerciseList.addExercise(exercise5);
-        ExerciseList newList = testExerciseList.exercisesFromType("Cardio");
+        try {
+            newList = testExerciseList.exercisesFromType("Cardio");
+        } catch (EmptyException e) {
+            fail("EmptyException should not have been thrown.");
+        }
         assertEquals(2, newList.length());
         assertTrue(newList.contains(exercise1));
         assertTrue(newList.contains(exercise3));
-        ExerciseList noExercisesFromType = testExerciseList.exercisesFromType("Abs");
+        ExerciseList noExercisesFromType = null;
+        try {
+            noExercisesFromType = testExerciseList.exercisesFromType("Abs");
+        } catch (EmptyException e) {
+            fail("EmptyException should not have been thrown.");
+        }
         assertEquals(0, noExercisesFromType.length());
     }
 
@@ -134,5 +254,4 @@ public class ExerciseListTest {
         assertTrue(names.contains("Cardio: October 12 for 1 hours"));
         assertTrue(names.contains("Flexibility: June 21 for 2 hours"));
     }
-
 }

@@ -1,5 +1,7 @@
 package ui;
 
+import exceptions.EmptyException;
+import exceptions.NotInListException;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -220,7 +222,13 @@ public class ExerciseTracker {
         System.out.println("Input exercise hours here:");
         Integer hours = Integer.valueOf(input.nextLine());
         Exercise e = new Exercise(type, date, hours);
-        exercises.removeExercise(e);
+        try {
+            exercises.removeExercise(e);
+        } catch (EmptyException emptyException) {
+            System.out.println("Sorry, your exercise list is empty!");
+        } catch (NotInListException notInListException) {
+            System.out.println("Sorry, this exercise is not in your list!");
+        }
         System.out.println("You have removed this exercise.");
     }
 
@@ -350,7 +358,12 @@ public class ExerciseTracker {
         System.out.println("Input your date to filter here:");
         input.nextLine();
         String date = input.nextLine();
-        ExerciseList byDate = exercises.exercisesFromDate(date);
+        ExerciseList byDate = null;
+        try {
+            byDate = exercises.exercisesFromDate(date);
+        } catch (EmptyException e) {
+            System.out.println("Sorry your exercise list is empty!");
+        }
         System.out.println("Here is the list of exercises by " + date + ":" + byDate.getNames());
     }
 
@@ -359,7 +372,12 @@ public class ExerciseTracker {
         System.out.println("Input your type to filter here:");
         input.nextLine();
         String type = input.nextLine();
-        ExerciseList byType = exercises.exercisesFromType(type);
+        ExerciseList byType = null;
+        try {
+            byType = exercises.exercisesFromType(type);
+        } catch (EmptyException e) {
+            System.out.println("Sorry your exercise list is empty!");
+        }
         System.out.println("Here is the list of exercises by " + type + ":" + byType.getNames());
     }
 
@@ -392,5 +410,4 @@ public class ExerciseTracker {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
-
 }

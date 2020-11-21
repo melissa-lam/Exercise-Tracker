@@ -1,5 +1,7 @@
 package ui;
 
+import exceptions.EmptyException;
+import exceptions.NotInListException;
 import model.Exercise;
 import model.ExerciseList;
 
@@ -34,6 +36,7 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
     private JComboBox<String> chooseFilter;
     private JButton viewByButton;
     private JTextField filter;
+    private int index;
 
     //EFFECTS: constructs the exercise panel
     public ExercisePanel() {
@@ -197,12 +200,26 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 204, 204));
         removeExerciseButton = new JButton("Remove Exercise");
+        removeExerciseActionListener();
+        panel.add(removeExerciseButton);
+        return panel;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: makes the remove exercise button action listener
+    public void removeExerciseActionListener() {
         removeExerciseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int index = list.getSelectedIndex();
+                index = list.getSelectedIndex();
                 listModel.remove(index);
-                exercises.removeIndex(index);
+                try {
+                    exercises.removeIndex(index);
+                } catch (EmptyException emptyException) {
+                    System.out.println("Sorry your exercise list is empty!");
+                } catch (NotInListException notInListException) {
+                    System.out.println("Sorry this exercise is not in your list!");
+                }
                 int size = listModel.getSize();
 
                 if (size == 0) {
@@ -211,14 +228,18 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
                     if (index == listModel.getSize()) {
                         index--;
                     }
-                    list.setSelectedIndex(index);
-                    list.ensureIndexIsVisible(index);
+                    setIndexAndVisible();
                 }
             }
         });
-        panel.add(removeExerciseButton);
-        return panel;
     }
+
+    // EFFECTS: sets list index visible
+    public void setIndexAndVisible() {
+        list.setSelectedIndex(index);
+        list.ensureIndexIsVisible(index);
+    }
+
 
     // MODIFIES: this
     // EFFECTS: creates the panel showing the list scroll pane and the remove exercise button and adds it to this
@@ -266,24 +287,50 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listModel.clear();
-                if (chooseFilter.getSelectedItem().toString().equals("All")) {
-                    for (Exercise er: exercises.getExercises()) {
-                        listModel.addElement(er.getName());
-                    }
-                }
-                if (chooseFilter.getSelectedItem().toString().equals("Type")) {
-                    for (Exercise er: exercises.exercisesFromType(filter.getText()).getExercises()) {
-                        listModel.addElement(er.getName());
-                    }
-                }
-                if (chooseFilter.getSelectedItem().toString().equals("Date")) {
-                    for (Exercise er: exercises.exercisesFromDate(filter.getText()).getExercises()) {
-                        listModel.addElement(er.getName());
-                    }
-                }
+                viewByAll();
+                viewByType();
+                viewByDate();
                 resetFilterTextField();
             }
         });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: makes the list for all exercises
+    public void viewByAll() {
+        if (chooseFilter.getSelectedItem().toString().equals("All")) {
+            for (Exercise er: exercises.getExercises()) {
+                listModel.addElement(er.getName());
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: makes the list for all exercises according to the type
+    public void viewByType() {
+        if (chooseFilter.getSelectedItem().toString().equals("Type")) {
+            try {
+                for (Exercise er: exercises.exercisesFromType(filter.getText()).getExercises()) {
+                    listModel.addElement(er.getName());
+                }
+            } catch (EmptyException emptyException) {
+                System.out.println("Sorry your exercise list is empty!");
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: makes the list for all exercises according to the date
+    public void viewByDate() {
+        if (chooseFilter.getSelectedItem().toString().equals("Date")) {
+            try {
+                for (Exercise er: exercises.exercisesFromDate(filter.getText()).getExercises()) {
+                    listModel.addElement(er.getName());
+                }
+            } catch (EmptyException emptyException) {
+                System.out.println("Sorry your exercise list is empty!");
+            }
+        }
     }
 
     // MODIFIES: this
@@ -338,5 +385,4 @@ public class ExercisePanel extends JPanel implements ListSelectionListener {
             }
         }
     }
-
 }

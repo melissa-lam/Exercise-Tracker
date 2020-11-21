@@ -1,6 +1,5 @@
 package ui;
 
-import model.Goals;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 

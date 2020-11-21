@@ -1,7 +1,5 @@
 package ui;
 
-import model.Exercise;
-import model.ExerciseList;
 import model.Goal;
 import model.Goals;
 
