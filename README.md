@@ -46,6 +46,17 @@ file and have the option to do so or not.
 I did the first option of making a class in my model package robust. I made my ExerciseList class robust and the 
 methods that I changed were the removeExercise, removeIndex, exercisesFromDate, and exercisesFromType methods.
 
+## **Phase 4: Task 3** ##
+Refactoring changes to make after designing UML class diagram:
+- Make an abstract class where my Goal and Exercise class can extend from since they have very similar methods in both 
+classes. This would help with any duplicate code.
+- In my ExercisePanel class, I have a lot of duplicated code. For example, I can declare and instantiate the colour I 
+made since I use it many times. This will help with having a single point of control so if I decide to change the colour
+in the future, then I won't have to change it at every point. I would do the same to my GoalsPanel.
+- In my ExercisePanel class, for methods createTypePane, createDatePane, and createHoursPane, the implementation is very
+similar so I would refactor into one method. I would do the same to my GoalsPanel. Since I also have these very similar 
+methods in my ExercisePanel and GoalsPanel, I could also possibly make an abstract class to avoid more code duplication.
+
 
 
  
