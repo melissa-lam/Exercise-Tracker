@@ -19,43 +19,7 @@ I want to focus on having a healthy lifestyle this year through healthy eating a
  focus on the physical health aspect of my goal. I also want to make this for my dad so he can keep track of his 
  exercises and so that he can stay motivated in being healthy.
 
-## **User Stories**
 
-- As a user, I want to be able to add an exercise to my list of exercises to track.
-- As a user, I want to be able to remove an exercise.
-- As a user, I want to be able to view the past exercises done.
-- As a user, I can view the past exercises by date, by exercise type, or view all at once.
-- As a user, I want to be able to set a duration of time and the date that I did the exercise.
-- As a user, I want to be able to set a goal for what type of exercise I'll do, when I'll do it, and for how long I'll 
-do it.
-- As a user, I want to be able to remove goals.
-- As a user, I want to be able to set a goal to be completed.
-- As a user, I want to be able to view the list of goals left to do and list of completed goals.
-
-- As a user, I want to be able to save my record of goals, both completed and todo goals, to the file.
-- As a user, I want to be able to save my record of exercises to the file.
-- As a user, I want to be able to load my record of exercises from the file.
-- As a user, I want to be able to load my record of goals from the file.
-- As a user, when I select the quit option from the application menu, I want to be reminded to save my exercises to 
-file and have the option to do so or not.
-- As a user, when I select the quit option from the application menu, I want to be reminded to save my goals to 
-file and have the option to do so or not.
-- As a user, when I start the application, I want to be given the option to load my to-do list from file.
-
-## **Phase 4: Task 2** ##
-I did the first option of making a class in my model package robust. I made my ExerciseList class robust and the 
-methods that I changed were the removeExercise, removeIndex, exercisesFromDate, and exercisesFromType methods.
-
-## **Phase 4: Task 3** ##
-Refactoring changes to make after designing UML class diagram:
-- Make an abstract class where my Goal and Exercise class can extend from since they have very similar methods in both 
-classes. This would help with any duplicate code.
-- In my ExercisePanel class, I have a lot of duplicated code. For example, I can declare and instantiate the colour I 
-made since I use it many times. This will help with having a single point of control so if I decide to change the colour
-in the future, then I won't have to change it at every point. I would do the same to my GoalsPanel.
-- In my ExercisePanel class, for methods createTypePane, createDatePane, and createHoursPane, the implementation is very
-similar so I would refactor into one method. I would do the same to my GoalsPanel. Since I also have these very similar 
-methods in my ExercisePanel and GoalsPanel, I could also possibly make an abstract class to avoid more code duplication.
 
 
 
